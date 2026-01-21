@@ -34,7 +34,11 @@ What shall we do next?[0m
 [31m## 1: [D][ ] this (by: Monday /from 1pm /to 3pm)[0m
 [31m## 2: [E][ ] this /by Monday (from: 1pm to: 3pm)[0m
 [31mWe do not have this task number.[0m
-[31mMark -1 to you too![0m
+[31mWe do not have this task number.[0m
+[31mDeleted: [T][ ] this /by Monday /from 1pm /to 3pm[0m
+[31mWe do not have this task number.[0m
+[31mWe do not have this task number.[0m
+[31mWe do not have this task number.[0m
 [31mBye bye to you too![0m
       A    A
     <  U w U >

@@ -13,16 +13,19 @@ public class Oliver {
                     sayGoodbye();
                 } else if (str.equalsIgnoreCase("list")) {
                     readTask();
-                } else if (str.matches("^[mM][aA][rR][kK] \\d++$")) {
+                } else if (str.startsWith("mark ")) {
                     str = str.substring(5);
                     updateTask(str, true);
-                } else if (str.matches("^[uU][nN][mM][aA][rR][kK] \\d++$")) {
+                } else if (str.startsWith("unmark ")) {
                     str = str.substring(7);
                     updateTask(str, false);
                 } else if (str.startsWith("todo ") 
                     || str.startsWith("deadline ")
                     || str.startsWith("event ")) {
                     storeTask(str);
+                } else if (str.startsWith("delete ")) {
+                    str = str.substring(7);
+                    deleteTask(str);
                 } else {
                     //capitalise and echo
                     if (str.length() > 0) {
@@ -32,6 +35,16 @@ public class Oliver {
                     speak(str + " to you too!");
                 }
             }
+        }
+    }
+
+    private static void deleteTask(String trim) {
+        try {
+            Integer i = Integer.parseInt(trim);
+            speak("Deleted: " + tasks.get(i));
+            tasks.remove((int) i);
+        } catch (NumberFormatException | IndexOutOfBoundsException e) {
+            speak("We do not have this task number.");
         }
     }
 

@@ -12,5 +12,9 @@ mark 0
 unmark 0
 mark 10000000000000000000000000000000000000000
 mark -1
+delete 0
+delete a
+delete -1
+delete 
 bye bye
 bye
