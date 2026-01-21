@@ -2,8 +2,14 @@ public class Event extends Task {
     private String start;
     private String end;
 
-    public Event(String name, String s, String e) {
+    public Event(String name, String s, String e) throws EmptyStringException {
         super(name);
+        if (!s.matches("\\S.*+")) {
+            throw new EmptyStringException("The task needs a start time.");
+        }
+        if (!e.matches("\\S.*+")) {
+            throw new EmptyStringException("The task needs an end time.");
+        }
         this.start = s;
         this.end = e;
     }

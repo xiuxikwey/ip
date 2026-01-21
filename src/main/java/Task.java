@@ -2,7 +2,10 @@ public class Task {
     private String name;
     private boolean done;
 
-    public Task(String name) {
+    public Task(String name) throws EmptyStringException {
+        if (!name.matches("\\S.*+")) {
+            throw new EmptyStringException("The task needs a name.");
+        }
         this.name = name;
         this.done = false;
     }

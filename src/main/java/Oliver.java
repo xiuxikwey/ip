@@ -13,10 +13,10 @@ public class Oliver {
                     sayGoodbye();
                 } else if (str.equalsIgnoreCase("list")) {
                     readTask();
-                } else if (str.matches("^mark \\d++$")) {
+                } else if (str.matches("^[mM][aA][rR][kK] \\d++$")) {
                     str = str.substring(5);
                     updateTask(str, true);
-                } else if (str.matches("^unmark \\d++$")) {
+                } else if (str.matches("^[uU][nN][mM][aA][rR][kK] \\d++$")) {
                     str = str.substring(7);
                     updateTask(str, false);
                 } else if (str.startsWith("todo ") 
@@ -42,7 +42,7 @@ public class Oliver {
             if (status) {
                 speak("Consider it DONE!");
             } else {
-                speak("The toils of man know no end.");
+                speak("The threads unravel.");
             }
             readTask();
         } catch (NumberFormatException | IndexOutOfBoundsException e) {
@@ -51,39 +51,42 @@ public class Oliver {
     }
 
     private static void storeTask(String str) {
-        Task newTask = null;
-        if (str.startsWith("todo ")) {
-            str = str.substring(5);
-            newTask = new ToDo(str);
-        } else if (str.startsWith("deadline ")) {
-            str = str.substring(9);
-            String[] sarr = str.split(" /by ");
-            if (sarr.length == 2) {
-                newTask = new Deadline(sarr[0], sarr[1]);
-            } else {
-                speak("You need to use one \" /by \"");
-                return;
-            }
-        } else {
-            //starts with "event "
-            str = str.substring(6);
-            String[] nameArr = str.split(" /from ");
-            if (nameArr.length == 2) {
-                String[] timeArr = nameArr[1].split(" /to ");
-                if (timeArr.length == 2) {
-                    newTask = new Event(nameArr[0], timeArr[0], timeArr[1]);
+        try {
+            Task newTask = null;
+            if (str.startsWith("todo ")) {
+                str = str.substring(5);
+                newTask = new ToDo(str);
+            } else if (str.startsWith("deadline ")) {
+                str = str.substring(9);
+                String[] sarr = str.split(" /by ");
+                if (sarr.length == 2) {
+                    newTask = new Deadline(sarr[0], sarr[1]);
                 } else {
-                    speak("You need to use one \" /to \"");
+                    speak("Try deadline A /by B.");
                     return;
                 }
             } else {
-                speak("You need to use one \" /from \"");
-                return;
+                //starts with "event "
+                str = str.substring(6);
+                String[] nameArr = str.split(" /from ");
+                if (nameArr.length == 2) {
+                    String[] timeArr = nameArr[1].split(" /to ");
+                    if (timeArr.length == 2) {
+                        newTask = new Event(nameArr[0], timeArr[0], timeArr[1]);
+                    } else {
+                        speak("Try event A /from B /to C.");
+                        return;
+                    }
+                } else {
+                    speak("Try event A /from B /to C.");
+                    return;
+                }
             }
+            tasks.add(newTask);
+            speak("Next we will \"" + newTask + "\"!");
+        } catch (EmptyStringException e) {
+            speak(e.getMessage());
         }
-        
-        tasks.add(newTask);
-        speak("Next we will \"" + newTask + "\"!");
     }
 
     private static void readTask() {
