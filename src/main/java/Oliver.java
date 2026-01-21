@@ -13,14 +13,23 @@ public class Oliver {
                     sayGoodbye();
                 } else if (str.equalsIgnoreCase("list")) {
                     readTask();
-                } else if (str.matches("^mark \\d+$")) {
-                    String trim = str.substring(5);
-                    updateTask(trim, true);
-                } else if (str.matches("^unmark \\d+$")) {
-                    String trim = str.substring(7);
-                    updateTask(trim, false);
-                } else {
+                } else if (str.matches("^mark \\d++$")) {
+                    str = str.substring(5);
+                    updateTask(str, true);
+                } else if (str.matches("^unmark \\d++$")) {
+                    str = str.substring(7);
+                    updateTask(str, false);
+                } else if (str.startsWith("todo ") 
+                    || str.startsWith("deadline ")
+                    || str.startsWith("event ")) {
                     storeTask(str);
+                } else {
+                    //capitalise and echo
+                    if (str.length() > 0) {
+                        str = str.substring(0, 1).toUpperCase()
+                        + str.substring(1);
+                    }
+                    speak(str + " to you too!");
                 }
             }
         }
@@ -41,9 +50,40 @@ public class Oliver {
         }
     }
 
-    private static void storeTask(String input) {
-        tasks.add(new Task(input));
-        speak("Next we will \"" + input + "\"!");
+    private static void storeTask(String str) {
+        Task newTask = null;
+        if (str.startsWith("todo ")) {
+            str = str.substring(5);
+            newTask = new ToDo(str);
+        } else if (str.startsWith("deadline ")) {
+            str = str.substring(9);
+            String[] sarr = str.split(" /by ");
+            if (sarr.length == 2) {
+                newTask = new Deadline(sarr[0], sarr[1]);
+            } else {
+                speak("You need to use one \" /by \"");
+                return;
+            }
+        } else {
+            //starts with "event "
+            str = str.substring(6);
+            String[] nameArr = str.split(" /from ");
+            if (nameArr.length == 2) {
+                String[] timeArr = nameArr[1].split(" /to ");
+                if (timeArr.length == 2) {
+                    newTask = new Event(nameArr[0], timeArr[0], timeArr[1]);
+                } else {
+                    speak("You need to use one \" /to \"");
+                    return;
+                }
+            } else {
+                speak("You need to use one \" /from \"");
+                return;
+            }
+        }
+        
+        tasks.add(newTask);
+        speak("Next we will \"" + newTask + "\"!");
     }
 
     private static void readTask() {
@@ -75,7 +115,7 @@ public class Oliver {
         speak(
         """
         Oliver, King Of The Night, at your service!
-        I know \"list\", \"mark <number>\", \"unmark <number>\"and \"bye\"!
+        I know "todo", "deadline", "event", "list", "mark", "unmark" and "bye"!
         What shall we do next?
 
         """);
