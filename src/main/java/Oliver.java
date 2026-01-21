@@ -3,7 +3,7 @@ import java.util.ListIterator;
 import java.util.Scanner;
 
 public class Oliver {
-    private static ArrayList<String> strArr = new ArrayList<String>();
+    private static ArrayList<Task> tasks = new ArrayList<Task>();
 
     private static void event_handler() {
         try(Scanner sc = new Scanner(System.in)) {
@@ -12,24 +12,47 @@ public class Oliver {
                 if (str.equalsIgnoreCase("bye")) {
                     sayGoodbye();
                 } else if (str.equalsIgnoreCase("list")) {
-                    readItems();
+                    readTask();
+                } else if (str.matches("^mark \\d+$")) {
+                    String trim = str.substring(5);
+                    updateTask(trim, true);
+                } else if (str.matches("^unmark \\d+$")) {
+                    String trim = str.substring(7);
+                    updateTask(trim, false);
                 } else {
-                    storeItem(str);
+                    storeTask(str);
                 }
             }
         }
     }
 
-    private static void storeItem(String input) {
-        strArr.add(input);
-        speak("Stored \"" + input + "\".");
+    private static void updateTask(String trim, boolean status) {
+        try {
+            Integer i = Integer.parseInt(trim);
+            tasks.get(i).setDone(status);
+            if (status) {
+                speak("Consider it DONE!");
+            } else {
+                speak("The toils of man know no end");
+            }
+            readTask();
+        } catch (NumberFormatException | IndexOutOfBoundsException e) {
+            speak("We do not have this task number.");
+        }
     }
 
-    private static void readItems() {
-        ListIterator<String> iter = strArr.listIterator();
-        speak("Reading from my records:");
+    private static void storeTask(String input) {
+        tasks.add(new Task(input));
+        speak("Next we will \"" + input + "\"!");
+    }
+
+    private static void readTask() {
+        ListIterator<Task> iter = tasks.listIterator();
+        speak("""
+        ###################
+        ## SEIZE THE DAY""");
         while (iter.hasNext()) {
-            speak(iter.nextIndex() + ": " + iter.next());
+            speak("## " + iter.nextIndex() + ": " + iter.next());
         }
     }
 
@@ -52,8 +75,9 @@ public class Oliver {
         speak(
         """
         Oliver, King Of The Night, at your service!
-        I keep track of things you say, which you can recall by saying \"list\".
-        You can exit by saying \"bye\"!
+        I know \"list\", \"mark <number>\", \"unmark <number>\"and \"bye\"!
+        What shall we do next?
+
         """);
     }
 
