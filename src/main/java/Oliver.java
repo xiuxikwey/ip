@@ -42,7 +42,7 @@ public class Oliver {
             if (status) {
                 speak("Consider it DONE!");
             } else {
-                speak("The toils of man know no end");
+                speak("The toils of man know no end.");
             }
             readTask();
         } catch (NumberFormatException | IndexOutOfBoundsException e) {
@@ -109,16 +109,13 @@ public class Oliver {
           (__\\ < O w O > /__)
               (   w  w  )
           o__/  mm   mm
-        *****************************
-        """;
+        *****************************""";
         System.out.println(drawing);
         speak(
         """
         Oliver, King Of The Night, at your service!
         I know "todo", "deadline", "event", "list", "mark", "unmark" and "bye"!
-        What shall we do next?
-
-        """);
+        What shall we do next?""");
     }
 
     private static void sayGoodbye() {
@@ -127,8 +124,7 @@ public class Oliver {
             <  U w U >
               /    \\
           o__/      \\  
-        *****************************
-        """;
+        *****************************""";
         System.out.println(drawing);
         speak("Goodbye!");
     }

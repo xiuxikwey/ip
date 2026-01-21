@@ -1,0 +1,12 @@
+todo this /by Monday /from 1pm /to 3pm
+deadline this /by Monday /from 1pm /to 3pm
+event this /by Monday /from 1pm /to 3pm
+eventthis /by Monday /from 1pm /to 3pm
+list
+list all
+mark 0
+unmark 0
+mark 10000000000000000000000000000000000000000
+mark -1
+bye bye
+bye
