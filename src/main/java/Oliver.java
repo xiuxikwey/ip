@@ -96,7 +96,7 @@ public class Oliver {
                 }
             }
             tasks.add(newTask);
-            speak("Next we will \"" + newTask + "\"!");
+            speak("Next task is to \"" + newTask + "\"!");
         } catch (EmptyStringException e) {
             speak(e.getMessage());
         }
@@ -130,7 +130,7 @@ public class Oliver {
         speak(
         """
         Oliver, King Of The Night, at your service!
-        I know "todo", "deadline", "event", "list", "mark", "unmark" and "bye"!
+        I know "todo", "deadline", "event", "list", "mark", "unmark", "delete" and "bye"!
         What shall we do next?""");
     }
 
