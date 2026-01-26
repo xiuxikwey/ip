@@ -1,3 +1,8 @@
+package chatbot;
+
+/**
+ * Subclass of task with start and end.
+ */
 public class Event extends Task {
     private String start;
     private String end;
@@ -14,8 +19,9 @@ public class Event extends Task {
         this.end = e;
     }
 
+    @Override
     public String toString() {
         return "[E]" + super.toString()
-        + " (from: " + this.start + " to: " + this.end + ")";
+                + " (from: " + this.start + " to: " + this.end + ")";
     }
 }

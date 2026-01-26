@@ -1,3 +1,8 @@
+package chatbot;
+
+/**
+ * Subclass of task with deadline field.
+ */
 public class Deadline extends Task{
     private String date;
 
@@ -9,8 +14,9 @@ public class Deadline extends Task{
         this.date = date;
     }
 
+    @Override
     public String toString() {
         return "[D]" + super.toString()
-        + " (by: " + this.date + ")";
+                + " (by: " + this.date + ")";
     }
 }

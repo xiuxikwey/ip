@@ -1,7 +1,12 @@
+package chatbot;
+
 import java.util.ArrayList;
 import java.util.ListIterator;
 import java.util.Scanner;
 
+/**
+ * Chatbot called Oliver.
+ */
 public class Oliver {
     private static ArrayList<Task> tasks = new ArrayList<Task>();
 
@@ -11,8 +16,9 @@ public class Oliver {
                 String str = sc.nextLine();
                 if (str.equalsIgnoreCase("bye")) {
                     sayGoodbye();
+                    break;
                 } else if (str.equalsIgnoreCase("list")) {
-                    readTask();
+                    readTasks();
                 } else if (str.startsWith("mark ")) {
                     str = str.substring(5);
                     updateTask(str, true);
@@ -20,19 +26,14 @@ public class Oliver {
                     str = str.substring(7);
                     updateTask(str, false);
                 } else if (str.startsWith("todo ") 
-                    || str.startsWith("deadline ")
-                    || str.startsWith("event ")) {
+                        || str.startsWith("deadline ")
+                        || str.startsWith("event ")) {
                     storeTask(str);
                 } else if (str.startsWith("delete ")) {
                     str = str.substring(7);
                     deleteTask(str);
                 } else {
-                    //capitalise and echo
-                    if (str.length() > 0) {
-                        str = str.substring(0, 1).toUpperCase()
-                        + str.substring(1);
-                    }
-                    speak(str + " to you too!");
+                    echo(str);
                 }
             }
         }
@@ -57,7 +58,7 @@ public class Oliver {
             } else {
                 speak("The threads unravel.");
             }
-            readTask();
+            readTasks();
         } catch (NumberFormatException | IndexOutOfBoundsException e) {
             speak("We do not have this task number.");
         }
@@ -102,7 +103,7 @@ public class Oliver {
         }
     }
 
-    private static void readTask() {
+    private static void readTasks() {
         ListIterator<Task> iter = tasks.listIterator();
         speak("""
         ###################
@@ -114,8 +115,17 @@ public class Oliver {
 
     private static void speak(String input) {
         System.out.println("\u001B[31m"
-            + input
-            + "\u001B[0m");
+                + input
+                + "\u001B[0m");
+    }
+
+    private static void echo(String str) {
+        //unrecognised, capitalise and echo
+        if (str.length() > 0) {
+            str = str.substring(0, 1).toUpperCase()
+                    + str.substring(1);
+        }
+        speak(str + " to you too!");
     }
 
     private static void greet() {
