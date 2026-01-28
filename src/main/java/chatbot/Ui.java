@@ -8,7 +8,7 @@ public class Ui {
     /**
      * Prints input in red colour
      * 
-     * @param input
+     * @param input string to be printed
      */
     public static void speak(String input) {
         System.out.println("\u001B[31m"
@@ -19,7 +19,7 @@ public class Ui {
     /**
      * Capitalises and speaks str
      * 
-     * @param str
+     * @param str string to be printed
      */
     public static void echo(String str) {
         //unrecognised, capitalise and echo

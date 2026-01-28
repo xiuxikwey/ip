@@ -1,0 +1,19 @@
+ ___               ___
+(___\  /~\   /~\  /___)
+  (__\ < O w O > /__)
+      (   w  w  )
+  o__/  mm   mm
+*****************************
+[31mOliver, King Of The Night, at your service!
+I know "todo", "deadline", "event", "list", "mark", "unmark", "delete" and "bye"!
+What shall we do next?[0m
+[31m###################
+## SEIZE THE DAY[0m
+[31m## 0: [D][Done] this (by: Monday /from 1pm /to 3pm)[0m
+[31m## 1: [E][ ] this /by Monday (from: 1pm to: 3pm)[0m
+      A    A
+    <  U w U >
+      /    \
+  o__/      \
+*****************************
+[31mGoodbye![0m

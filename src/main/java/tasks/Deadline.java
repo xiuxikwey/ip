@@ -1,4 +1,4 @@
-package chatbot;
+package tasks;
 
 /**
  * Subclass of task with deadline field.

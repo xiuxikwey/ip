@@ -1,3 +1,4 @@
+[31mGetting a new list...[0m
  ___               ___
 (___\  /~\   /~\  /___)
   (__\ < O w O > /__)
@@ -5,16 +6,18 @@
   o__/  mm   mm
 *****************************
 [31mOliver, King Of The Night, at your service!
-I know "todo", "deadline", "event", "list", "mark", "unmark" and "bye"!
+I know "todo", "deadline", "event", "list", "mark", "unmark", "delete" and "bye"!
 What shall we do next?[0m
-[31mNext we will "[T][ ] this /by Monday /from 1pm /to 3pm"![0m
-[31mNext we will "[D][ ] this (by: Monday /from 1pm /to 3pm)"![0m
-[31mNext we will "[E][ ] this /by Monday (from: 1pm to: 3pm)"![0m
+[31mNext task is to "[T][ ] this /by Monday /from 1pm /to 3pm"![0m
+[31mNext task is to "[D][ ] this (by: Monday /from 1pm /to 3pm)"![0m
+[31mNext task is to "[E][ ] this /by Monday (from: 1pm to: 3pm)"![0m
+[31m to you too![0m
 [31mEventthis /by Monday /from 1pm /to 3pm to you too![0m
 [31mTry event A /from B /to C.[0m
 [31mTry event A /from B /to C.[0m
 [31mThe task needs a name.[0m
 [31mThe task needs a deadline.[0m
+[31m to you too![0m
 [31m###################
 ## SEIZE THE DAY[0m
 [31m## 0: [T][ ] this /by Monday /from 1pm /to 3pm[0m
@@ -32,6 +35,12 @@ What shall we do next?[0m
 ## SEIZE THE DAY[0m
 [31m## 0: [T][ ] this /by Monday /from 1pm /to 3pm[0m
 [31m## 1: [D][ ] this (by: Monday /from 1pm /to 3pm)[0m
+[31m## 2: [E][ ] this /by Monday (from: 1pm to: 3pm)[0m
+[31mConsider it DONE![0m
+[31m###################
+## SEIZE THE DAY[0m
+[31m## 0: [T][ ] this /by Monday /from 1pm /to 3pm[0m
+[31m## 1: [D][Done] this (by: Monday /from 1pm /to 3pm)[0m
 [31m## 2: [E][ ] this /by Monday (from: 1pm to: 3pm)[0m
 [31mWe do not have this task number.[0m
 [31mWe do not have this task number.[0m

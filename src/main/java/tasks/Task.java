@@ -1,7 +1,7 @@
-package chatbot;
+package tasks;
 
 /**
- * Parent task type with name, isDone.
+ * Parent class with fields name, isDone.
  */
 public class Task {
     private String name;

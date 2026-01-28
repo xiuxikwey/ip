@@ -1,18 +1,21 @@
 todo this /by Monday /from 1pm /to 3pm
 deadline this /by Monday /from 1pm /to 3pm
 event this /by Monday /from 1pm /to 3pm
+
 eventthis /by Monday /from 1pm /to 3pm
 event this /from Monday /from 1pm /to 3pm
 event this /to 3pm /from 1pm
 todo     
 deadline this /by    
+
 list
 list all
 mark 0
 unmark 0
+mark 1
 mark 10000000000000000000000000000000000000000
 mark -1
-delete 0
+delete 00
 delete a
 delete -1
 delete 

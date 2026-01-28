@@ -3,22 +3,32 @@ package chatbot;
 import java.util.ArrayList;
 import java.util.ListIterator;
 
+import tasks.Task;
+
 /**
  * List of tasks
  */
 public class TaskList {
-    private static ArrayList<Task> tasks = new ArrayList<Task>();
+    private static ArrayList<Task> tasks;
+
+    /**
+     * Loads taskList from Storage
+     */
+    public static void recover() {
+        tasks = Storage.getList();
+    }
 
     /**
      * Removes task from list
      * 
      * @param trim task number in string format
      */
-    public static void deleteTask(String trim) {
+    public static void deleteIndex(String trim) {
         try {
             Integer i = Integer.parseInt(trim);
             Ui.speak("Deleted: " + tasks.get(i));
             tasks.remove((int) i);
+            Storage.updateStorage(tasks);
         } catch (NumberFormatException | IndexOutOfBoundsException e) {
             Ui.speak("We do not have this task number.");
         }
@@ -30,7 +40,7 @@ public class TaskList {
      * @param trim task number as string
      * @param status future state of task
      */
-    public static void updateTask(String trim, boolean status) {
+    public static void updateIndex(String trim, boolean status) {
         try {
             Integer i = Integer.parseInt(trim);
             tasks.get(i).setDone(status);
@@ -39,6 +49,7 @@ public class TaskList {
             } else {
                 Ui.speak("The threads unravel.");
             }
+            Storage.updateStorage(tasks);
             readTasks();
         } catch (NumberFormatException | IndexOutOfBoundsException e) {
             Ui.speak("We do not have this task number.");
@@ -46,47 +57,17 @@ public class TaskList {
     }
 
     /**
-     * Create new task
+     * Add task to list
      * 
-     * @param str unparsed user input
+     * @param Task or null
      */
-    public static void storeTask(String str) {
-        try {
-            Task newTask = null;
-            if (str.startsWith("todo ")) {
-                str = str.substring(5);
-                newTask = new ToDo(str);
-            } else if (str.startsWith("deadline ")) {
-                str = str.substring(9);
-                String[] sarr = str.split(" /by ");
-                if (sarr.length == 2) {
-                    newTask = new Deadline(sarr[0], sarr[1]);
-                } else {
-                    Ui.speak("Try deadline A /by B.");
-                    return;
-                }
-            } else {
-                //starts with "event "
-                str = str.substring(6);
-                String[] nameArr = str.split(" /from ");
-                if (nameArr.length == 2) {
-                    String[] timeArr = nameArr[1].split(" /to ");
-                    if (timeArr.length == 2) {
-                        newTask = new Event(nameArr[0], timeArr[0], timeArr[1]);
-                    } else {
-                        Ui.speak("Try event A /from B /to C.");
-                        return;
-                    }
-                } else {
-                    Ui.speak("Try event A /from B /to C.");
-                    return;
-                }
-            }
-            tasks.add(newTask);
-            Ui.speak("Next task is to \"" + newTask + "\"!");
-        } catch (EmptyStringException e) {
-            Ui.speak(e.getMessage());
+    public static void storeTask(Task newTask) {
+        if (newTask == null) {
+            return;
         }
+        tasks.add(newTask);
+        Storage.updateStorage(tasks);
+        Ui.speak("Next task is to \"" + newTask + "\"!");
     }
 
     /**
