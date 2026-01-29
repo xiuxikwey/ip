@@ -9,7 +9,7 @@ import tasks.Task;
  * List of tasks
  */
 public class TaskList {
-    private static ArrayList<Task> tasks;
+    private static ArrayList<Task> tasks = new ArrayList<>();
 
     /**
      * Loads taskList from Storage

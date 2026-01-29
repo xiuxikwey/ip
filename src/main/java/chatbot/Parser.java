@@ -6,7 +6,6 @@ import java.util.Scanner;
 import tasks.Deadline;
 import tasks.EmptyStringException;
 import tasks.Event;
-import tasks.StorageException;
 import tasks.Task;
 import tasks.ToDo;
 
