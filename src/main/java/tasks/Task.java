@@ -27,4 +27,9 @@ public class Task {
         }
         return "[" + s + "] " + this.name;
     }
+
+    @Override
+    public boolean equals(Object other) {
+        return other.toString().equals(this.toString());
+    }
 }

@@ -39,7 +39,11 @@ public class Parser {
                 } else if (str.startsWith("todo ") 
                         || str.startsWith("deadline ")
                         || str.startsWith("event ")) {
-                    TaskList.storeTask(userToTask(str));
+                    try {
+                        TaskList.storeTask(userToTask(str));
+                    } catch (ParserException e) {
+                        Ui.speak(e.getMessage());
+                    }
 
                 } else if (str.startsWith("delete ")) {
                     str = str.substring(7);
@@ -53,12 +57,13 @@ public class Parser {
     }
 
     /**
-     * Converts user string to task
+     * Converts user input to task
      * 
-     * @param str
-     * @return Task object or null if bad input
+     * @param str user input
+     * @return created task
+     * @throws ParserException if creation fails
      */
-    public static Task userToTask(String str) {
+    public static Task userToTask(String str) throws ParserException {
         Task newTask = null;
         try {
             if (str.startsWith("todo ")) {
@@ -70,10 +75,9 @@ public class Parser {
                 if (sarr.length == 2) {
                     newTask = new Deadline(sarr[0], parseDate(sarr[1]));
                 } else {
-                    Ui.speak("Try deadline A /by B.");
+                    throw new ParserException("Try deadline A /by B.");
                 }
-            } else {
-                //starts with "event "
+            } else if (str.startsWith("event ")) {
                 str = str.substring(6);
                 String[] nameArr = str.split(" /from ");
                 if (nameArr.length == 2) {
@@ -81,14 +85,16 @@ public class Parser {
                     if (timeArr.length == 2) {
                         newTask = new Event(nameArr[0], timeArr[0], timeArr[1]);
                     } else {
-                        Ui.speak("Try event A /from B /to C.");
+                        throw new ParserException("Try event A /from B /to C.");
                     }
                 } else {
-                    Ui.speak("Try event A /from B /to C.");
+                    throw new ParserException("Try event A /from B /to C.");
                 }
+            } else {
+                throw new ParserException("Not a type of task");
             }
         } catch (EmptyStringException e) {
-            Ui.speak(e.getMessage());
+            throw new ParserException(e.getMessage());
         }
         return newTask;
     }
@@ -98,9 +104,9 @@ public class Parser {
      * 
      * @param str string stored in storage
      * @return task
-     * @throws StorageException is task is not created
+     * @throws ParserException if task is not created
      */
-    public static Task fileToTask(String str) throws StorageException {
+    public static Task fileToTask(String str) throws ParserException {
         Task newTask = null;
         boolean isDone = false;
         try {
@@ -124,9 +130,9 @@ public class Parser {
                     sarr[1] = sarr[1].substring(0, sarr[1].length() - 1);
                     newTask = new Deadline(sarr[0], parseDate(sarr[1]));
                 } else {
-                    throw new StorageException("Parse error");
+                    throw new ParserException("Parse error");
                 }
-            } else {
+            } else if (str.startsWith("[E]")) {
                 //starts with "event "
                 if (str.startsWith("[E][ ] ")) {
                     str = str.substring(7);
@@ -142,14 +148,16 @@ public class Parser {
                                 timeArr[1].length() - 1);
                         newTask = new Event(nameArr[0], timeArr[0], timeArr[1]);
                     } else {
-                        throw new StorageException("Parse error");
+                        throw new ParserException("Parse error");
                     }
                 } else {
-                    throw new StorageException("Parse error");
+                    throw new ParserException("Parse error");
                 }
+            } else {
+                throw new ParserException("Not a type of task");
             }
         } catch (EmptyStringException e) {
-            throw new StorageException("Empty string");
+            throw new ParserException("Parse error");
         }
         if (newTask != null) {
             newTask.setDone(isDone);

@@ -51,7 +51,7 @@ public class Storage {
             Ui.speak("Getting a new list...");
         } catch (IOException e) {
             Ui.speak("I forgot how to read :P");
-        } catch (StorageException e) {
+        } catch (ParserException e) {
             Ui.speak("Lost my old list...");
             return new ArrayList<>();
         }
