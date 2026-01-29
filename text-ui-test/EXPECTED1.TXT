@@ -12,11 +12,11 @@ What shall we do next?[0m
 [31mNext task is to "[D][ ] this (by: Monday /from 1pm /to 3pm)"![0m
 [31mNext task is to "[E][ ] this /by Monday (from: 1pm to: 3pm)"![0m
 [31m to you too![0m
+[31mThe task needs a name.[0m
+[31mThe task needs a deadline.[0m
 [31mEventthis /by Monday /from 1pm /to 3pm to you too![0m
 [31mTry event A /from B /to C.[0m
 [31mTry event A /from B /to C.[0m
-[31mThe task needs a name.[0m
-[31mThe task needs a deadline.[0m
 [31m to you too![0m
 [31m###################
 ## SEIZE THE DAY[0m
@@ -48,6 +48,10 @@ What shall we do next?[0m
 [31mWe do not have this task number.[0m
 [31mWe do not have this task number.[0m
 [31mWe do not have this task number.[0m
+[31mNext task is to "[D][ ] this (by: 03 Mar 2026)"![0m
+[31mNext task is to "[D][ ] this (by: 03 Mar 2003)"![0m
+[31m to you too![0m
+[31mNext task is to "[D][ ] this (by: 03/03/2003)"![0m
 [31mBye bye to you too![0m
       A    A
     <  U w U >

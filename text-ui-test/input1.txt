@@ -2,11 +2,11 @@ todo this /by Monday /from 1pm /to 3pm
 deadline this /by Monday /from 1pm /to 3pm
 event this /by Monday /from 1pm /to 3pm
 
+todo     
+deadline this /by    
 eventthis /by Monday /from 1pm /to 3pm
 event this /from Monday /from 1pm /to 3pm
 event this /to 3pm /from 1pm
-todo     
-deadline this /by    
 
 list
 list all
@@ -19,5 +19,9 @@ delete 00
 delete a
 delete -1
 delete 
+deadline this /by 03 mar
+deadline this /by 03/mar/2003
+
+deadline this /by 03/03/2003
 bye bye
 bye

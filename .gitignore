@@ -13,6 +13,8 @@ src/main/resources/docs/
 *.iml
 bin/
 
+# Dynamic files
+toAdd.TXT
 /text-ui-test/ACTUAL1.TXT
 /text-ui-test/ACTUAL2.TXT
 /text-ui-test/toAdd.TXT

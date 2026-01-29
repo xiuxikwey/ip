@@ -1,5 +1,6 @@
 package chatbot;
 
+import java.time.LocalDate;
 import java.util.Scanner;
 
 import tasks.Deadline;
@@ -68,7 +69,7 @@ public class Parser {
                 str = str.substring(9);
                 String[] sarr = str.split(" /by ");
                 if (sarr.length == 2) {
-                    newTask = new Deadline(sarr[0], sarr[1]);
+                    newTask = new Deadline(sarr[0], parseDate(sarr[1]));
                 } else {
                     Ui.speak("Try deadline A /by B.");
                 }
@@ -122,7 +123,7 @@ public class Parser {
                 String[] sarr = str.split(" \\(by: ");
                 if (sarr.length == 2) {
                     sarr[1] = sarr[1].substring(0, sarr[1].length() - 1);
-                    newTask = new Deadline(sarr[0], sarr[1]);
+                    newTask = new Deadline(sarr[0], parseDate(sarr[1]));
                 } else {
                     throw new StorageException("Parse error");
                 }
@@ -155,5 +156,69 @@ public class Parser {
             newTask.setDone(isDone);
         }
         return newTask;
+    }
+
+    /**
+     * Tries to convert date string to yyyy-mm-dd
+     * 
+     * @param str date string
+     * @return date string
+     */
+    public static String parseDate(String str) {
+        if (str.matches("^\\d{2} \\w{3} \\d{4}$")) {
+            return str.substring(7, 11) + "-"
+                    + getMonthNumber(str.substring(3,6))
+                    + "-" + str.substring(0,2);
+        } else if (str.matches("^\\d{1} \\w{3} \\d{4}$")) {
+            return str.substring(6, 10) + "-"
+                    + getMonthNumber(str.substring(2,5))
+                    + "-0" + str.substring(0,1);
+        } else if (str.matches("^\\d{2}/\\w{3}/\\d{4}$")) {
+            return str.substring(7, 11) + "-"
+                    + getMonthNumber(str.substring(3,6))
+                    + "-" + str.substring(0,2);
+        } else if (str.matches("^\\d{1}/\\w{3}/\\d{4}$")) {
+            return str.substring(6, 10) + "-"
+                    + getMonthNumber(str.substring(2,5))
+                    + "-0" + str.substring(0,1);
+        } else if (str.matches("^\\d{2} \\w{3}$")) {
+            return LocalDate.now().getYear() + "-"
+                    + getMonthNumber(str.substring(3,6))
+                    + "-" + str.substring(0,2);
+        } else {
+            return str;
+        } 
+
+        
+    }
+
+    private static String getMonthNumber(String s) {
+        if (s.equalsIgnoreCase("jan")) {
+            return "01";
+        } else if (s.equalsIgnoreCase("feb")) {
+            return "02";
+        }  else if (s.equalsIgnoreCase("mar")) {
+            return "03";
+        }  else if (s.equalsIgnoreCase("apr")) {
+            return "04";
+        }  else if (s.equalsIgnoreCase("may")) {
+            return "05";
+        }  else if (s.equalsIgnoreCase("jun")) {
+            return "06";
+        }  else if (s.equalsIgnoreCase("jul")) {
+            return "07";
+        }  else if (s.equalsIgnoreCase("aug")) {
+            return "08";
+        }  else if (s.equalsIgnoreCase("sep")) {
+            return "09";
+        }  else if (s.equalsIgnoreCase("oct")) {
+            return "10";
+        }  else if (s.equalsIgnoreCase("nov")) {
+            return "11";
+        }  else if (s.equalsIgnoreCase("dec")) {
+            return "11";
+        } else {
+            return s;
+        }
     }
 }
