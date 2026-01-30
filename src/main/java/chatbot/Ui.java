@@ -45,7 +45,7 @@ public class Ui {
         speak(
         """
         Oliver, King Of The Night, at your service!
-        I know "todo", "deadline", "event", "list", "mark", "unmark", "delete" and "bye"!
+        I know "todo", "deadline", "event", "list", "mark", "unmark", "delete", "search" and "bye"!
         What shall we do next?""");
     }
 

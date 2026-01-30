@@ -6,7 +6,7 @@
   o__/  mm   mm
 *****************************
 [31mOliver, King Of The Night, at your service!
-I know "todo", "deadline", "event", "list", "mark", "unmark", "delete" and "bye"!
+I know "todo", "deadline", "event", "list", "mark", "unmark", "delete", "search" and "bye"!
 What shall we do next?[0m
 [31mNext task is to "[T][ ] this /by Monday /from 1pm /to 3pm"![0m
 [31mNext task is to "[D][ ] this (by: Monday /from 1pm /to 3pm)"![0m

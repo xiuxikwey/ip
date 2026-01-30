@@ -50,6 +50,10 @@ public class Parser {
                     str = str.substring(7);
                     TaskList.deleteIndex(str);
 
+                } else if (str.startsWith("search ")) {
+                    str = str.substring(7);
+                    TaskList.searchTask(str);
+
                 } else {
                     Ui.echo(str);
                 }
