@@ -10,12 +10,12 @@ import tasks.Task;
 import tasks.ToDo;
 
 /**
- * Converts text to objects or functions
+ * Converts strings to objects or functionality.
  */
 public class Parser {
 
     /**
-     * Converts user input to actions
+     * Calls functions based on user input.
      */
     public static void takeInput() {
         try(Scanner sc = new Scanner(System.in)) {
@@ -57,11 +57,11 @@ public class Parser {
     }
 
     /**
-     * Converts user input to task
+     * Returns task given user input.
      * 
-     * @param str user input
-     * @return created task
-     * @throws ParserException if creation fails
+     * @param str User input.
+     * @return Created task.
+     * @throws ParserException If task is not created.
      */
     public static Task userToTask(String str) throws ParserException {
         Task newTask = null;
@@ -100,11 +100,11 @@ public class Parser {
     }
 
     /**
-     * Converts stored string to task
+     * Returns task given input from Storage.
      * 
-     * @param str string stored in storage
-     * @return task
-     * @throws ParserException if task is not created
+     * @param str String stored in storage.
+     * @return Task.
+     * @throws ParserException If task is not created.
      */
     public static Task fileToTask(String str) throws ParserException {
         Task newTask = null;
@@ -166,10 +166,11 @@ public class Parser {
     }
 
     /**
-     * Tries to convert date string to yyyy-mm-dd
+     * Returns date string, possibly in yyyy-mm-dd format.
+     * Only for inputs like "3 Mar 2003".
      * 
-     * @param str date string
-     * @return date string
+     * @param str Date string.
+     * @return Date string.
      */
     public static String parseDate(String str) {
         if (str.matches("^\\d{2} \\w{3} \\d{4}$")) {

@@ -12,13 +12,13 @@ import java.util.ArrayList;
 import tasks.Task;
 
 /**
- * Stores taskList in file, which can be recovered
+ * Stores list of tasks in file, which can be recovered.
  */
 public class Storage {
     private static final String PATH = "./toAdd.txt";
     
     /**
-     * Updates storage
+     * Updates storage.
      */
     public static void updateStorage(ArrayList<Task> tasks) {
         try {
@@ -34,9 +34,9 @@ public class Storage {
     }
 
     /**
-     * Retrieves stored tasks
+     * Retrieves stored tasks.
      * 
-     * @return stored tasks
+     * @return ArrayList of stored tasks
      */
     public static ArrayList<Task> getList() {
         ArrayList<Task> result = new ArrayList<Task>();
@@ -56,6 +56,5 @@ public class Storage {
             return new ArrayList<>();
         }
         return result;
-
     }
 }

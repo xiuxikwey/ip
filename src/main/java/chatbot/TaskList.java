@@ -6,22 +6,22 @@ import java.util.ListIterator;
 import tasks.Task;
 
 /**
- * List of tasks
+ * List of tasks with add, delete, list functionality.
  */
 public class TaskList {
     private static ArrayList<Task> tasks = new ArrayList<>();
 
     /**
-     * Loads taskList from Storage
+     * Initialises taskList from Storage.
      */
     public static void recover() {
         tasks = Storage.getList();
     }
 
     /**
-     * Removes task from list
+     * Removes task from list.
      * 
-     * @param trim task number in string format
+     * @param trim Task number as a string.
      */
     public static void deleteIndex(String trim) {
         try {
@@ -35,10 +35,10 @@ public class TaskList {
     }
 
     /**
-     * Set task isDone for a task number
+     * Set task isDone for a task number.
      * 
-     * @param trim task number as string
-     * @param status future state of task
+     * @param trim Task number as string.
+     * @param status Desired isDone of task.
      */
     public static void updateIndex(String trim, boolean status) {
         try {
@@ -57,21 +57,18 @@ public class TaskList {
     }
 
     /**
-     * Add task to list
+     * Add new task to list.
      * 
-     * @param Task or null
+     * @param Task
      */
     public static void storeTask(Task newTask) {
-        if (newTask == null) {
-            return;
-        }
         tasks.add(newTask);
         Storage.updateStorage(tasks);
         Ui.speak("Next task is to \"" + newTask + "\"!");
     }
 
     /**
-     * Print out all tasks
+     * Print out all tasks.
      */
     public static void readTasks() {
         ListIterator<Task> iter = tasks.listIterator();

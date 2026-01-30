@@ -1,7 +1,7 @@
 package chatbot;
 
 /**
- * Chatbot called Oliver.
+ * Chats with user.
  */
 public class Oliver {
     public static void main(String[] args) {

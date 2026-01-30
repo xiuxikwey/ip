@@ -1,14 +1,14 @@
 package chatbot;
 
 /**
- * Prints to System.out to communicate with user
+ * Prints to System.out to communicate with user.
  */
 public class Ui {
    
     /**
-     * Prints input in red colour
+     * Prints input in red colour.
      * 
-     * @param input string to be printed
+     * @param input String to be printed.
      */
     public static void speak(String input) {
         System.out.println("\u001B[31m"
@@ -17,9 +17,9 @@ public class Ui {
     }
     
     /**
-     * Capitalises and speaks str
+     * Capitalises and speaks str.
      * 
-     * @param str string to be printed
+     * @param str String to be printed.
      */
     public static void echo(String str) {
         //unrecognised, capitalise and echo
@@ -31,7 +31,7 @@ public class Ui {
     }
 
     /**
-     * Prints welcome message
+     * Prints welcome message.
      */
     public static void greet() {
         String drawing = """
@@ -50,7 +50,7 @@ public class Ui {
     }
 
     /**
-     * Prints goodbye message
+     * Prints goodbye message.
      */
     public static void sayGoodbye() {
         String drawing = """

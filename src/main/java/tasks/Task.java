@@ -1,7 +1,7 @@
 package tasks;
 
 /**
- * Parent class with fields name, isDone.
+ * Representation of task with fields name, isDone.
  */
 public class Task {
     private String name;
