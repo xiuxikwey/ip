@@ -4,16 +4,16 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
+import tasks.Deadline;
 import tasks.EmptyStringException;
+import tasks.Event;
 import tasks.Task;
 import tasks.ToDo;
-import tasks.Deadline;
-import tasks.Event;
 
 /**
- * Tests fileToTask from Parser
+ * Tests fileToTask from Parser.
  * 
- * Note Parser.fileToTask depends on toString() of tasks
+ * Note Parser.fileToTask depends on toString() of tasks.
  */
 public class ParserTest {
     

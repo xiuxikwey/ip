@@ -7,16 +7,17 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 
+import tasks.Deadline;
 import tasks.EmptyStringException;
+import tasks.Event;
 import tasks.Task;
 import tasks.ToDo;
-import tasks.Deadline;
-import tasks.Event;
+
 
 /**
- * Tests Storage class, ensuring updateStorage() works with getList()
+ * Tests Storage class, ensuring updateStorage() works with getList().
  * 
- * note Storage.getList() calls Parser.fileToTask()
+ * Note Storage.getList() calls Parser.fileToTask().
  */
 public class StorageTest {
 

@@ -4,6 +4,11 @@ package chatbot;
  * Chats with user.
  */
 public class Oliver {
+    /**
+     * Starts chatbot.
+     * 
+     * @param args Ignored.
+     */
     public static void main(String[] args) {
         TaskList.recover();
         Ui.greet();
