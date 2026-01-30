@@ -82,4 +82,22 @@ public class TaskList {
             Ui.speak("## " + iter.nextIndex() + ": " + iter.next());
         }
     }
+
+    /**
+     * Prints tasks similar to search term.
+     * 
+     * @param str
+     */
+    public static void searchTask(String str) {
+        ListIterator<Task> iter = tasks.listIterator();
+        Ui.speak("""
+        None shall escape""");
+        while (iter.hasNext()) {
+            Integer i = iter.nextIndex();
+            Task t = iter.next();
+            if (t.toString().contains(str)) {
+                Ui.speak("## " + i + ": " + t.toString());
+            }
+        }
+    }
 }

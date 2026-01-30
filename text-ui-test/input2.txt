@@ -1,2 +1,6 @@
 list
+search this
+search Monday
+search Mar
+search awoo
 bye
