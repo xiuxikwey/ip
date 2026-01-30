@@ -1,6 +1,7 @@
 package chatbot;
 
 import java.time.LocalDate;
+
 import java.util.Scanner;
 
 import tasks.Deadline;
@@ -69,6 +70,7 @@ public class Parser {
             if (str.startsWith("todo ")) {
                 str = str.substring(5);
                 newTask = new ToDo(str);
+
             } else if (str.startsWith("deadline ")) {
                 str = str.substring(9);
                 String[] sarr = str.split(" /by ");
@@ -77,6 +79,7 @@ public class Parser {
                 } else {
                     throw new ParserException("Try deadline A /by B.");
                 }
+
             } else if (str.startsWith("event ")) {
                 str = str.substring(6);
                 String[] nameArr = str.split(" /from ");
@@ -118,6 +121,7 @@ public class Parser {
                     isDone = true;
                 }
                 newTask = new ToDo(str);
+
             } else if (str.startsWith("[D]")) {
                 if (str.startsWith("[D][ ] ")) {
                     str = str.substring(7);
@@ -132,6 +136,7 @@ public class Parser {
                 } else {
                     throw new ParserException("Parse error");
                 }
+                
             } else if (str.startsWith("[E]")) {
                 //starts with "event "
                 if (str.startsWith("[E][ ] ")) {

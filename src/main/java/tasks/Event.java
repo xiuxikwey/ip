@@ -40,13 +40,15 @@ public class Event extends Task {
     public String toString() {
         String s;
         if (preciseStart != null) {
-            s = this.preciseStart.format(DateTimeFormatter.ofPattern("hh:mma"));
+            s = this.preciseStart.format(
+                    DateTimeFormatter.ofPattern("hh:mma"));
         } else {
             s = this.start;
         }
         String e;
         if (preciseEnd != null) {
-            e = this.preciseEnd.format(DateTimeFormatter.ofPattern("hh:mma"));
+            e = this.preciseEnd.format(
+                    DateTimeFormatter.ofPattern("hh:mma"));
         } else {
             e = this.end;
         }
