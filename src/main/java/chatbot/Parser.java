@@ -176,7 +176,7 @@ public class Parser {
 
     /**
      * Returns date string, possibly in yyyy-mm-dd format.
-     * Only for inputs like "3 Mar 2003".
+     * Only parses dates like 03 Mar
      * 
      * @param str Date string.
      * @return Date string.
@@ -204,9 +204,7 @@ public class Parser {
                     + "-" + str.substring(0,2);
         } else {
             return str;
-        } 
-
-        
+        }
     }
 
     private static String getMonthNumber(String s) {
@@ -233,7 +231,7 @@ public class Parser {
         }  else if (s.equalsIgnoreCase("nov")) {
             return "11";
         }  else if (s.equalsIgnoreCase("dec")) {
-            return "11";
+            return "12";
         } else {
             return s;
         }

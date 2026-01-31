@@ -53,7 +53,6 @@ public class Storage {
             Ui.speak("I forgot how to read :P");
         } catch (ParserException e) {
             Ui.speak("Lost my old list...");
-            return new ArrayList<>();
         }
         return result;
     }
