@@ -5,8 +5,14 @@ package tasks;
  */
 public class ToDo extends Task{
 
-    public ToDo(String s) throws EmptyStringException {
-        super(s);
+    /**
+     * Creates new Todo object.
+     * 
+     * @param name Name of task.
+     * @throws EmptyStringException Thrown when name is empty.
+     */
+    public ToDo(String name) throws EmptyStringException {
+        super(name);
     }
 
     @Override

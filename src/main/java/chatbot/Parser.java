@@ -18,7 +18,7 @@ public class Parser {
     /**
      * Calls functions based on user input.
      */
-    public static void takeInput() {
+    public static void takeUserInput() {
         try(Scanner sc = new Scanner(System.in)) {
             while (sc.hasNextLine()) {
                 String str = sc.nextLine();
@@ -41,7 +41,7 @@ public class Parser {
                         || str.startsWith("deadline ")
                         || str.startsWith("event ")) {
                     try {
-                        TaskList.storeTask(userToTask(str));
+                        TaskList.storeTask(userInputToTask(str));
                     } catch (ParserException e) {
                         Ui.speak(e.getMessage());
                     }
@@ -68,7 +68,7 @@ public class Parser {
      * @return Created task.
      * @throws ParserException If task is not created.
      */
-    public static Task userToTask(String str) throws ParserException {
+    public static Task userInputToTask(String str) throws ParserException {
         Task newTask = null;
         try {
             if (str.startsWith("todo ")) {
@@ -113,7 +113,7 @@ public class Parser {
      * @return Task.
      * @throws ParserException If task is not created.
      */
-    public static Task fileToTask(String str) throws ParserException {
+    public static Task fileInputToTask(String str) throws ParserException {
         Task newTask = null;
         boolean isDone = false;
         try {

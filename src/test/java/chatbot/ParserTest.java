@@ -23,9 +23,9 @@ public class ParserTest {
             Task a = new ToDo("s");
             Task b = new Deadline("a","b");
             Task c = new Event("a","b","c");
-            assertEquals(Parser.fileToTask(a.toString()), a);
-            assertEquals(Parser.fileToTask(b.toString()), b);
-            assertEquals(Parser.fileToTask(c.toString()), c);
+            assertEquals(Parser.fileInputToTask(a.toString()), a);
+            assertEquals(Parser.fileInputToTask(b.toString()), b);
+            assertEquals(Parser.fileInputToTask(c.toString()), c);
         } catch (EmptyStringException e) {
             throw new RuntimeException("Empty task name");
         } catch (ParserException e) {
@@ -39,9 +39,9 @@ public class ParserTest {
             Task a = new ToDo("a");
             Task b = new Deadline("b","b");
             Task c = new Event("c","c","c");
-            assertEquals(Parser.userToTask("todo a"), a);
-            assertEquals(Parser.userToTask("deadline b /by b"), b);
-            assertEquals(Parser.userToTask("event c /from c /to c"), c);
+            assertEquals(Parser.userInputToTask("todo a"), a);
+            assertEquals(Parser.userInputToTask("deadline b /by b"), b);
+            assertEquals(Parser.userInputToTask("event c /from c /to c"), c);
         } catch (EmptyStringException e) {
             throw new RuntimeException("Empty task name");
         } catch (ParserException e) {
@@ -52,7 +52,7 @@ public class ParserTest {
     @Test
     public void userToTaskFail1() {
         try {
-            Parser.userToTask("deadline b /by b /by b");
+            Parser.userInputToTask("deadline b /by b /by b");
         }catch (ParserException e) {
             assertEquals("Try deadline A /by B.", e.getMessage());
         }
@@ -61,7 +61,7 @@ public class ParserTest {
     @Test
     public void userToTaskFail2() {
         try {
-            Parser.userToTask("event c /to c /from c");
+            Parser.userInputToTask("event c /to c /from c");
         }catch (ParserException e) {
             assertEquals("Try event A /from B /to C.", e.getMessage());
         }

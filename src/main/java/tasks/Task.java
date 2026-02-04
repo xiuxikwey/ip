@@ -7,6 +7,12 @@ public class Task {
     private String name;
     private boolean isDone;
 
+    /**
+     * Creates new task object.
+     * 
+     * @param name Name of object.
+     * @throws EmptyStringException Thrown when name is empty string.
+     */
     public Task(String name) throws EmptyStringException {
         if (!name.matches("\\S.*+")) {
             throw new EmptyStringException("The task needs a name.");

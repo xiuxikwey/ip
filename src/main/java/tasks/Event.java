@@ -13,24 +13,31 @@ public class Event extends Task {
     private LocalTime preciseStart;
     private LocalTime preciseEnd;
     
-
-    public Event(String name, String s, String e) throws EmptyStringException {
+    /**
+     * Creates new event object.
+     * 
+     * @param name Name of task.
+     * @param start Start time.
+     * @param end End time.
+     * @throws EmptyStringException Thrown when field empty.
+     */
+    public Event(String name, String start, String end) throws EmptyStringException {
         super(name);
-        if (!s.matches("\\S.*+")) {
+        if (!start.matches("\\S.*+")) {
             throw new EmptyStringException("The task needs a start time.");
         }
-        if (!e.matches("\\S.*+")) {
+        if (!end.matches("\\S.*+")) {
             throw new EmptyStringException("The task needs an end time.");
         }
-        this.start = s;
-        this.end = e;
+        this.start = start;
+        this.end = end;
         try {
-            preciseStart = LocalTime.parse(s);
+            preciseStart = LocalTime.parse(start);
         } catch (DateTimeParseException exc) {
             preciseStart = null;
         }
         try {
-            preciseEnd = LocalTime.parse(e);
+            preciseEnd = LocalTime.parse(end);
         } catch (DateTimeParseException exc) {
             preciseEnd = null;
         }
@@ -38,21 +45,21 @@ public class Event extends Task {
 
     @Override
     public String toString() {
-        String s;
+        String startString;
         if (preciseStart != null) {
-            s = this.preciseStart.format(
+            startString = this.preciseStart.format(
                     DateTimeFormatter.ofPattern("hh:mma"));
         } else {
-            s = this.start;
+            startString = this.start;
         }
-        String e;
+        String endString;
         if (preciseEnd != null) {
-            e = this.preciseEnd.format(
+            endString = this.preciseEnd.format(
                     DateTimeFormatter.ofPattern("hh:mma"));
         } else {
-            e = this.end;
+            endString = this.end;
         }
         return "[E]" + super.toString()
-                + " (from: " + s + " to: " + e + ")";
+                + " (from: " + startString + " to: " + endString + ")";
     }
 }

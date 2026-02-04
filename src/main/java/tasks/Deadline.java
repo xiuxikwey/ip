@@ -11,6 +11,13 @@ public class Deadline extends Task{
     private String date;
     private LocalDate preciseDate;
 
+    /**
+     * Creates new deadline object.
+     * 
+     * @param name Name of task.
+     * @param date Deadline.
+     * @throws EmptyStringException Thrown when either field empty.
+     */
     public Deadline(String name, String date) throws EmptyStringException {
         super(name);
         if (!date.matches("\\S.*+")) {

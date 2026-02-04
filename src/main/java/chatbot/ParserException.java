@@ -5,6 +5,10 @@ package chatbot;
  */
 public class ParserException extends Exception {
 
+    /**
+     * Creates new exception.
+     * @param m Message.
+     */
     public ParserException(String m) {
         super(m);
     }
