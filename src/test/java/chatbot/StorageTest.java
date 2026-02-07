@@ -1,5 +1,6 @@
 package chatbot;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -22,6 +23,7 @@ import tasks.ToDo;
 public class StorageTest {
 
     @BeforeEach
+    @AfterAll
     @Test
     public void emptyTest() {
         Storage.updateStorage(new ArrayList<>());
@@ -72,4 +74,5 @@ public class StorageTest {
         Storage.updateStorage(t1);
         assertTrue(Storage.getList().equals(t1));
     }
+
 }
