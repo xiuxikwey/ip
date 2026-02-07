@@ -1,0 +1,28 @@
+#splitPane {
+    -fx-font-size: 2em;
+    -fx-font-weight: bold;
+    -fx-font-family: serif;
+    -fx-background-color: #222244;
+    -fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );
+}
+
+#scrollPane {
+    -fx-fit-to-height: true;
+    -fx-fit-to-width: true;
+}
+
+#dialogContainer {
+    -fx-background-color: #222244;
+}
+
+.user {
+    /*Alignment ignored by TextFlow.
+    Textflow only way to wrap text properly with scrollPane.*/
+    -fx-text-alignment: right;
+    -fx-fill: white;
+}
+
+.oliver {
+    -fx-text-alignment: left;
+    -fx-fill: #FF2244;
+}

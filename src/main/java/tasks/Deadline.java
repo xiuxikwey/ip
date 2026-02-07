@@ -33,7 +33,7 @@ public class Deadline extends Task{
 
     @Override
     public String toString() {
-        String s;
+        String s = "";
         if (preciseDate != null) {
             s = preciseDate.format(
                     DateTimeFormatter.ofPattern("dd MMM uuuu"));

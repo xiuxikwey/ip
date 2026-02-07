@@ -2,8 +2,6 @@ package chatbot;
 
 import java.time.LocalDate;
 
-import java.util.Scanner;
-
 import tasks.Deadline;
 import tasks.EmptyStringException;
 import tasks.Event;
@@ -16,48 +14,54 @@ import tasks.ToDo;
 public class Parser {
 
     /**
-     * Calls functions based on user input.
+     * Calls functions given user input.
+     * Returns false if program should terminate.
+     * 
+     * @param str User input.
+     * @return false if program should terminate.
      */
-    public static void takeUserInput() {
-        try(Scanner sc = new Scanner(System.in)) {
-            while (sc.hasNextLine()) {
-                String str = sc.nextLine();
-                if (str.equalsIgnoreCase("bye")) {
-                    Ui.sayGoodbye();
-                    break;
+    public static boolean parseUserInput(String str) {
+        if (str.equalsIgnoreCase("bye")) {
+            Ui.sayGoodbye();
+            return false;
 
-                } else if (str.equalsIgnoreCase("list")) {
-                    TaskList.readTasks();
+        } else if (str.equalsIgnoreCase("list")) {
+            TaskList.readTasks();
+            return true;
 
-                } else if (str.startsWith("mark ")) {
-                    str = str.substring(5);
-                    TaskList.updateIndex(str, true);
+        } else if (str.startsWith("mark ")) {
+            str = str.substring(5);
+            TaskList.markAtIndex(str, true);
+            return true;
 
-                } else if (str.startsWith("unmark ")) {
-                    str = str.substring(7);
-                    TaskList.updateIndex(str, false);
+        } else if (str.startsWith("unmark ")) {
+            str = str.substring(7);
+            TaskList.markAtIndex(str, false);
+            return true;
 
-                } else if (str.startsWith("todo ") 
-                        || str.startsWith("deadline ")
-                        || str.startsWith("event ")) {
-                    try {
-                        TaskList.storeTask(userInputToTask(str));
-                    } catch (ParserException e) {
-                        Ui.speak(e.getMessage());
-                    }
-
-                } else if (str.startsWith("delete ")) {
-                    str = str.substring(7);
-                    TaskList.deleteIndex(str);
-
-                } else if (str.startsWith("search ")) {
-                    str = str.substring(7);
-                    TaskList.searchTask(str);
-
-                } else {
-                    Ui.echo(str);
-                }
+        } else if (str.startsWith("todo ") 
+                || str.startsWith("deadline ")
+                || str.startsWith("event ")) {
+            try {
+                TaskList.storeTask(userInputToTask(str));
+            } catch (ParserException e) {
+                Ui.speak(e.getMessage());
             }
+            return true;
+
+        } else if (str.startsWith("delete ")) {
+            str = str.substring(7);
+            TaskList.deleteIndex(str);
+            return true;
+
+        } else if (str.startsWith("search ")) {
+            str = str.substring(7);
+            TaskList.searchTask(str);
+            return true;
+
+        } else {
+            Ui.echo(str);
+            return true;
         }
     }
 

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.TextFlow?>
+
+<BorderPane fx:id="root"
+            xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="gui.Controller"
+            prefHeight="400.0"
+            prefWidth="600.0">
+    <top>
+    </top>
+    <center>
+        <SplitPane  fx:id="splitPane"
+                    orientation="VERTICAL"
+                    dividerPositions="0.2, 0.9"
+                    prefWidth="${root.width}"
+                    prefheight="${root.height}">
+            <ImageView fx:id="head" 
+                        preserveRatio="false"
+                        fitWidth="${root.width}"
+                        fitHeight="100"/>
+            <ScrollPane fx:id="scrollPane"
+                        hbarPolicy="NEVER"
+                        pannable="TRUE">
+                <content>
+                    <TextFlow fx:id="dialogContainer">
+                    </TextFlow>
+                </content>
+            </ScrollPane>
+            <HBox>
+                <children>
+                    <TextArea fx:id="userInput"
+                            prefWidth="${root.width*0.8}"
+                            prefheight="${root.height}"
+                            HBox.hgrow="ALWAYS">
+                    </TextArea>
+                    <Button fx:id="sendButton"
+                            mnemonicParsing="false"
+                            prefWidth="${root.width*0.2}"
+                            prefheight="${root.height}"
+                            text="Send">
+                    </Button>
+                </children>
+            </HBox>
+        </SplitPane>
+    </center>
+    <bottom>
+    </bottom>
+</BorderPane>

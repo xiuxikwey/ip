@@ -40,7 +40,7 @@ public class TaskList {
      * @param trim Task number as string.
      * @param status Desired isDone of task.
      */
-    public static void updateIndex(String trim, boolean status) {
+    public static void markAtIndex(String trim, boolean status) {
         try {
             Integer i = Integer.parseInt(trim);
             tasks.get(i).setDone(status);
@@ -86,12 +86,10 @@ public class TaskList {
      * @param str
      */
     public static void searchTask(String str) {
-        ListIterator<Task> iter = tasks.listIterator();
         Ui.speak("""
         None shall escape""");
-        while (iter.hasNext()) {
-            Integer i = iter.nextIndex();
-            Task t = iter.next();
+        for (int i = 0; i < tasks.size(); i++) {
+            Task t = tasks.get(i);
             if (t.toString().contains(str)) {
                 Ui.speak("## " + i + ": " + t.toString());
             }

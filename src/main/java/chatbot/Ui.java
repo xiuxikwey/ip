@@ -1,19 +1,33 @@
 package chatbot;
 
+import java.util.ArrayList;
+
 /**
- * Prints to System.out to communicate with user.
+ * Used by other classes to communicate with user.
  */
 public class Ui {
    
+    private static ArrayList<String> responses = new ArrayList<>();
+
+    /**
+     * Returns last response from Ui and clears storage.
+     * 
+     * @return Last response.
+     */
+    public static ArrayList<String> getResponses() {
+        ArrayList<String> temp = Ui.responses;
+        Ui.responses = new ArrayList<>();
+        return temp;
+    }
+
     /**
      * Prints input in red colour.
+     * Updates guiResponse.
      * 
      * @param input String to be printed.
      */
     public static void speak(String input) {
-        System.out.println("\u001B[31m"
-                + input
-                + "\u001B[0m");
+       Ui.responses.add(input);
     }
     
     /**
@@ -29,37 +43,11 @@ public class Ui {
         }
         speak(str + " to you too!");
     }
-
-    /**
-     * Prints welcome message.
-     */
-    public static void greet() {
-        String drawing = """
-         ___               ___
-        (___\\  /~\\   /~\\  /___)
-          (__\\ < O w O > /__)
-              (   w  w  )
-          o__/  mm   mm
-        *****************************""";
-        System.out.println(drawing);
-        speak(
-        """
-        Oliver, King Of The Night, at your service!
-        I know "todo", "deadline", "event", "list", "mark", "unmark", "delete", "search" and "bye"!
-        What shall we do next?""");
-    }
-
+    
     /**
      * Prints goodbye message.
      */
     public static void sayGoodbye() {
-        String drawing = """
-              A    A
-            <  U w U >
-              /    \\
-          o__/      \\  
-        *****************************""";
-        System.out.println(drawing);
         speak("Goodbye!");
     }
 }
