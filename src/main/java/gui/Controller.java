@@ -34,13 +34,11 @@ public class Controller extends SplitPane {
     private Button sendButton;
     @FXML
     private ImageView head;
-    private Image img = new Image(this.getClass().getResourceAsStream("/images/face.png"));
+    private Image img = new Image(Controller.class.getResourceAsStream("/images/Face.png"));
     
     @FXML
     public void initialize() {
         TaskList.recover();
-        //autoscroll
-        scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
         //event handlers
         userInput.addEventHandler(KeyEvent.KEY_RELEASED, new keyPress());
         sendButton.setOnAction(new buttonPress());
@@ -77,23 +75,24 @@ public class Controller extends SplitPane {
      */
     private void handleUserInput() {
         String input = userInput.getText();
-        String[] parts = input.split("\n");
+        String[] inputLines = input.split("\n");
         boolean shouldExit = false;
 
         ArrayList<String> inputs = new ArrayList<>();
-        for (String s: parts) {
-            if (!s.isEmpty()) {
-                if (!Parser.parseUserInput(s)) {
-                    shouldExit = true;
-                }
-                inputs.add(s);
+        for (String s: inputLines) {
+            if (s.isEmpty()) {
+                continue;
             }
+            if (!Parser.parseUserInput(s)) {
+                shouldExit = true;
+            }
+            inputs.add(s);
         }
 
-        input = String.join("\n", inputs);
-        String response = String.join("\n", Ui.getResponses());        
+        String printableInput = String.join("\n", inputs);
+        String response = String.join("\n", Ui.getResponses());
         dialogContainer.getChildren().addAll(
-                DialogBox.getUserBox(input),
+                DialogBox.getUserBox(printableInput),
                 DialogBox.getOliverBox(response)
         );
         userInput.clear();
