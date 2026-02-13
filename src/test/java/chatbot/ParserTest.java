@@ -13,19 +13,19 @@ import tasks.ToDo;
 /**
  * Tests for Parser.
  * 
- * Note Parser.fileToTask depends on toString() of tasks.
+ * Note Parser.parseFileInput() depends on toString() of tasks.
  */
 public class ParserTest {
-    
+
     @Test
-    public void fileToTaskRead() {
+    public void parseFileInput_normalInput() {
         try {
             Task a = new ToDo("s");
             Task b = new Deadline("a","b");
             Task c = new Event("a","b","c");
-            assertEquals(Parser.fileInputToTask(a.toString()), a);
-            assertEquals(Parser.fileInputToTask(b.toString()), b);
-            assertEquals(Parser.fileInputToTask(c.toString()), c);
+            assertEquals(Parser.parseFileInput(a.toString()), a);
+            assertEquals(Parser.parseFileInput(b.toString()), b);
+            assertEquals(Parser.parseFileInput(c.toString()), c);
         } catch (EmptyStringException e) {
             throw new RuntimeException("Empty task name");
         } catch (ParserException e) {
@@ -34,36 +34,11 @@ public class ParserTest {
     }
 
     @Test
-    public void userToTaskRead() {
+    public void parseFileInput_malformedInput() {
         try {
-            Task a = new ToDo("a");
-            Task b = new Deadline("b","b");
-            Task c = new Event("c","c","c");
-            assertEquals(Parser.userInputToTask("todo a"), a);
-            assertEquals(Parser.userInputToTask("deadline b /by b"), b);
-            assertEquals(Parser.userInputToTask("event c /from c /to c"), c);
-        } catch (EmptyStringException e) {
-            throw new RuntimeException("Empty task name");
-        } catch (ParserException e) {
-            throw new RuntimeException("Parse failed");
-        }
-    }
-
-    @Test
-    public void userToTaskFail1() {
-        try {
-            Parser.userInputToTask("deadline b /by b /by b");
+            Parser.parseFileInput("[?][ ] s");
         }catch (ParserException e) {
-            assertEquals("Try deadline A /by B.", e.getMessage());
-        }
-    }
-
-    @Test
-    public void userToTaskFail2() {
-        try {
-            Parser.userInputToTask("event c /to c /from c");
-        }catch (ParserException e) {
-            assertEquals("Try event A /from B /to C.", e.getMessage());
+            assertEquals("Storage parse failed.", e.getMessage());
         }
     }
 }

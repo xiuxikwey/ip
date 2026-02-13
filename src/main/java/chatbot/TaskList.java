@@ -1,7 +1,6 @@
 package chatbot;
 
 import java.util.ArrayList;
-import java.util.ListIterator;
 
 import tasks.Task;
 
@@ -22,11 +21,11 @@ public class TaskList {
     /**
      * Removes task from list.
      * 
-     * @param trim Task number as a string.
+     * @param trimmed Task number as a string.
      */
-    public static void deleteIndex(String trim) {
+    public static void deleteIndex(String trimmed) {
         try {
-            Integer i = Integer.parseInt(trim);
+            Integer i = Integer.parseInt(trimmed);
             Ui.speak("Deleted: " + tasks.get(i));
             tasks.remove((int) i);
             Storage.updateStorage(tasks);
@@ -38,12 +37,12 @@ public class TaskList {
     /**
      * Set task isDone for a task number.
      * 
-     * @param trim Task number as string.
+     * @param trimmed Task number as string.
      * @param status Desired isDone of task.
      */
-    public static void markAtIndex(String trim, boolean status) {
+    public static void markAtIndex(String trimmed, boolean status) {
         try {
-            Integer i = Integer.parseInt(trim);
+            Integer i = Integer.parseInt(trimmed);
             tasks.get(i).setDone(status);
             if (status) {
                 Ui.speak("Consider it DONE!");
@@ -73,12 +72,11 @@ public class TaskList {
      * Print out all tasks.
      */
     public static void readTasks() {
-        ListIterator<Task> iter = tasks.listIterator();
         Ui.speak("""
         ###################
         ## SEIZE THE DAY""");
-        while (iter.hasNext()) {
-            Ui.speak("## " + iter.nextIndex() + ": " + iter.next());
+        for (int i = 0; i < tasks.size(); i++) {
+            Ui.speak("## " + i + ": " + tasks.get(i));
         }
     }
 
@@ -88,8 +86,7 @@ public class TaskList {
      * @param str
      */
     public static void searchTask(String str) {
-        Ui.speak("""
-        None shall escape""");
+        Ui.speak("None shall escape");
         for (int i = 0; i < tasks.size(); i++) {
             Task t = tasks.get(i);
             if (t.toString().contains(str)) {

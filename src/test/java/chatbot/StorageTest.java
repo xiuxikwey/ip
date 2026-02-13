@@ -18,12 +18,17 @@ import tasks.ToDo;
 /**
  * Tests Storage class, ensuring updateStorage() works with getList().
  * 
- * Note Storage.getList() calls Parser.fileToTask().
+ * Note Storage calls Parser.parseFileInput() and Ui.speak().
+ * Note tests call Task constructors.
  */
 public class StorageTest {
 
-    @BeforeEach
     @AfterAll
+    public static void cleanUp() {
+        Storage.updateStorage(new ArrayList<>());
+    }
+
+    @BeforeEach
     @Test
     public void emptyTest() {
         Storage.updateStorage(new ArrayList<>());
@@ -37,7 +42,6 @@ public class StorageTest {
             try {
                 t1.add(new ToDo("s" + i));
             } catch (EmptyStringException e) {
-                //fail the test
                 throw new RuntimeException("Empty task name");
             }
         }

@@ -44,7 +44,7 @@ public class Storage {
             BufferedReader reader = new BufferedReader(new FileReader(PATH));
             while (reader.ready()) {
                 String str = reader.readLine();
-                result.add(Parser.fileInputToTask(str));
+                result.add(Parser.parseFileInput(str));
             }
             reader.close();
         } catch (FileNotFoundException e) {

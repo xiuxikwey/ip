@@ -31,7 +31,8 @@
                         fitHeight="100"/>
             <ScrollPane fx:id="scrollPane"
                         hbarPolicy="NEVER"
-                        pannable="TRUE">
+                        pannable="TRUE"
+                        vvalue="${dialogContainer.height}">
                 <content>
                     <TextFlow fx:id="dialogContainer">
                     </TextFlow>
