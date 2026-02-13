@@ -26,6 +26,13 @@ public class Parser {
     private static String DEADLINE_FAIL = "Try deadline A /by B.";
     private static String EVENT_FAIL = "Try event A /from B /to C.";
     private static String STORAGE_FAIL = "Storage parse failed.";
+
+    /**
+     * Returns a command given user input.
+     * 
+     * @param str
+     * @return
+     */
     public Command parseUserInput(String str) {
         if (str.equalsIgnoreCase("bye")) {
             return new ExitCommand();
@@ -39,7 +46,7 @@ public class Parser {
             
         } else if (str.startsWith("unmark ")) {
             String trimmed = removeFirstWord(str);
-            return new UpdateCommand(str, false);
+            return new UpdateCommand(trimmed, false);
 
         } else if (str.startsWith("todo ") 
                 || str.startsWith("deadline ")
@@ -48,11 +55,11 @@ public class Parser {
 
         } else if (str.startsWith("delete ")) {
             String trimmed = removeFirstWord(str);
-            return new DeleteCommand(str);
+            return new DeleteCommand(trimmed);
 
         } else if (str.startsWith("search ")) {
             String trimmed = removeFirstWord(str);
-            return new SearchCommand(str);
+            return new SearchCommand(trimmed);
 
         } else if (str.equalsIgnoreCase("undo")) {
             return new UndoCommand();
@@ -83,45 +90,19 @@ public class Parser {
      * @throws ParserException If task is not created.
      */
     public Task userInputToTask(String str) throws ParserException {
-        Task newTask = null;
-        try {
-            if (str.startsWith("todo ")) {
-                str = str.substring(5);
-                newTask = new ToDo(str);
+        if (str.startsWith("todo ")) {
+            return parseToDo(str);
 
-            } else if (str.startsWith("deadline ")) {
-                str = str.substring(9);
-                String[] sarr = str.split(" /by ");
-                if (sarr.length == 2) {
-                    newTask = new Deadline(sarr[0], parseDate(sarr[1]));
-                } else {
-                    throw new ParserException("Try deadline A /by B.");
-                }
+        } else if (str.startsWith("deadline ")) {
+            return parseDeadline(str);
 
-            } else if (str.startsWith("event ")) {
-                str = str.substring(6);
-                String[] nameArr = str.split(" /from ");
-                if (nameArr.length == 2) {
-                    String[] timeArr = nameArr[1].split(" /to ");
-                    if (timeArr.length == 2) {
-                        newTask = new Event(nameArr[0], timeArr[0], timeArr[1]);
-                    } else {
-                        throw new ParserException("Try event A /from B /to C.");
-                    }
-                } else {
-                    throw new ParserException("Try event A /from B /to C.");
-                }
-            } else {
-                throw new ParserException("Not a type of task");
-            }
-        } catch (EmptyStringException e) {
-            throw new ParserException(e.getMessage());
+        } else {
+            return parseEvent(str);
         }
-        return newTask;
     }
 
     
-    private static Task parseToDo(String str) throws ParserException {
+    private Task parseToDo(String str) throws ParserException {
         try {
             String trim = removeFirstWord(str);
             return new ToDo(trim);
@@ -130,7 +111,7 @@ public class Parser {
         }
     }
 
-    private static Task parseDeadline(String str) throws ParserException {
+    private Task parseDeadline(String str) throws ParserException {
         try {
             String trim = removeFirstWord(str);
             String[] sarr = trim.split(" /by ");
@@ -143,7 +124,7 @@ public class Parser {
         }
     }
 
-    private static Task parseEvent(String str) throws ParserException {
+    private Task parseEvent(String str) throws ParserException {
         try {
             String trim = removeFirstWord(str);
 
@@ -201,7 +182,7 @@ public class Parser {
         }
     }
 
-    private static Task parseFileDeadline(String str) throws ParserException {
+    private Task parseFileDeadline(String str) throws ParserException {
         try {
             String trim = "";
             boolean isDone = false;
@@ -226,7 +207,7 @@ public class Parser {
         }
     }
 
-    private static Task parseFileEvent(String str) throws ParserException {
+    private Task parseFileEvent(String str) throws ParserException {
         try {
             String trim = "";
             boolean isDone = false;
