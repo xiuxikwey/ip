@@ -13,18 +13,12 @@ public class TaskList {
     /**
      * Initialises taskList from list.
      */
-<<<<<<< HEAD
     public void getTasksFrom(ArrayList<Task> list) {
         this.tasks = list;
     }
 
     public ArrayList<Task> getList() {
         return this.tasks;
-=======
-    public static void recover() {
-        tasks = Storage.getList();
-        assert(tasks != null);
->>>>>>> master
     }
 
     /**
@@ -51,12 +45,7 @@ public class TaskList {
      * 
      * @param Task
      */
-<<<<<<< HEAD
     public void storeTask(Task newTask) {
-=======
-    public static void storeTask(Task newTask) {
-        assert(newTask != null);
->>>>>>> master
         tasks.add(newTask);
     }
 

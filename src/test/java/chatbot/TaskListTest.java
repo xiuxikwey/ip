@@ -26,6 +26,7 @@ public class TaskListTest {
             arr.add(new ToDo("name"));
             arr.add(new Deadline("a","b"));
             arr.add(new Event("a", "b", "c"));
+            t.getTasksFrom(arr);
             assertEquals(t.getList(), arr);
         } catch (EmptyStringException e) {
             throw new RuntimeException();
@@ -93,7 +94,7 @@ public class TaskListTest {
                 , """
                 ###################
                 ## SEIZE THE DAY
-                ## [D][ ] s (by: s)""");
+                ## 0: [D][ ] s (by: s)""");
     }
 
     
@@ -127,6 +128,6 @@ public class TaskListTest {
         assertEquals(list.searchTask("s")
                 , """
                 None shall escape
-                [T][ ] s""");
+                ## 0: [T][ ] s""");
     }
 }
