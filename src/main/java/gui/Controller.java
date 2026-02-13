@@ -32,7 +32,7 @@ public class Controller extends SplitPane {
     private Button sendButton;
     @FXML
     private ImageView headImage;
-    private Image img = new Image(this.getClass().getResourceAsStream("/images/face.png"));
+    private Image img = new Image(this.getClass().getResourceAsStream("/images/Face.png"));
     
     private Oliver oliver;
     private String WELCOME = 

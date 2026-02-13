@@ -23,6 +23,9 @@ import tasks.ToDo;
  */
 public class Parser {
 
+    private static String DEADLINE_FAIL = "Try deadline A /by B.";
+    private static String EVENT_FAIL = "Try event A /from B /to C.";
+    private static String STORAGE_FAIL = "Storage parse failed.";
     public Command parseUserInput(String str) {
         if (str.equalsIgnoreCase("bye")) {
             return new ExitCommand();
@@ -31,11 +34,11 @@ public class Parser {
             return new ListCommand();
 
         } else if (str.startsWith("mark ")) {
-            str = str.substring(5);
-            return new UpdateCommand(str, true);
-
+            String trimmed = removeFirstWord(str);
+            return new UpdateCommand(trimmed, true);
+            
         } else if (str.startsWith("unmark ")) {
-            str = str.substring(7);
+            String trimmed = removeFirstWord(str);
             return new UpdateCommand(str, false);
 
         } else if (str.startsWith("todo ") 
@@ -44,11 +47,11 @@ public class Parser {
             return new AddCommand(str);
 
         } else if (str.startsWith("delete ")) {
-            str = str.substring(7);
+            String trimmed = removeFirstWord(str);
             return new DeleteCommand(str);
 
         } else if (str.startsWith("search ")) {
-            str = str.substring(7);
+            String trimmed = removeFirstWord(str);
             return new SearchCommand(str);
 
         } else if (str.equalsIgnoreCase("undo")) {
@@ -56,10 +59,20 @@ public class Parser {
 
         } else if (str.equalsIgnoreCase("redo")) {
             return new RedoCommand();
-
         } else {
             return new EchoCommand(str);
         }
+    }
+
+    private static String removeFirstWord(String str) {
+        String trimmed = "";
+        for (int i = 0; i < str.length(); i++) {
+            if (str.charAt(i) == ' ') {
+                trimmed = str.substring(i + 1);
+                break;
+            }
+        }
+        return trimmed;
     }
 
     /**
@@ -107,6 +120,49 @@ public class Parser {
         return newTask;
     }
 
+    
+    private static Task parseToDo(String str) throws ParserException {
+        try {
+            String trim = removeFirstWord(str);
+            return new ToDo(trim);
+        } catch (EmptyStringException e) {
+            throw new ParserException(e.getMessage());
+        }
+    }
+
+    private static Task parseDeadline(String str) throws ParserException {
+        try {
+            String trim = removeFirstWord(str);
+            String[] sarr = trim.split(" /by ");
+            if (sarr.length != 2) {
+                throw new ParserException(DEADLINE_FAIL);
+            }
+            return new Deadline(sarr[0], parseDate(sarr[1]));
+        } catch (EmptyStringException e) {
+            throw new ParserException(e.getMessage());
+        }
+    }
+
+    private static Task parseEvent(String str) throws ParserException {
+        try {
+            String trim = removeFirstWord(str);
+
+            String[] nameArr = trim.split(" /from ");
+            if (nameArr.length != 2) {
+                throw new ParserException(EVENT_FAIL);
+            }
+
+            String[] timeArr = nameArr[1].split(" /to ");
+            if (timeArr.length != 2) {
+                throw new ParserException(EVENT_FAIL);
+            }
+
+            return new Event(nameArr[0], timeArr[0], timeArr[1]);
+        } catch (EmptyStringException e) {
+            throw new ParserException(e.getMessage());
+        }
+    }
+
     /**
      * Returns task given input from Storage.
      * 
@@ -114,70 +170,94 @@ public class Parser {
      * @return Task.
      * @throws ParserException If task is not created.
      */
-    public Task fileInputToTask(String str) throws ParserException {
-        Task newTask = null;
-        boolean isDone = false;
-        try {
-            if (str.startsWith("[T]")) {
-                if (str.startsWith("[T][ ] ")) {
-                    str = str.substring(7);
-                } else {
-                    str = str.substring(10);
-                    isDone = true;
-                }
-                newTask = new ToDo(str);
+    public Task parseFileInput(String str) throws ParserException {
+        if (str.startsWith("[T]")) {
+            return parseFileToDo(str);
+        } else if (str.startsWith("[D]")) {
+            return parseFileDeadline(str);
+        } else if (str.startsWith("[E]")) {
+            return parseFileEvent(str);
+        } else {
+            throw new ParserException(STORAGE_FAIL);
+        }
+    }
 
-            } else if (str.startsWith("[D]")) {
-                if (str.startsWith("[D][ ] ")) {
-                    str = str.substring(7);
-                } else {
-                    str = str.substring(10);
-                    isDone = true;
-                }
-                String[] sarr = str.split(" \\(by: ");
-                if (sarr.length == 2) {
-                    sarr[1] = sarr[1].substring(0, sarr[1].length() - 1);
-                    newTask = new Deadline(sarr[0], parseDate(sarr[1]));
-                } else {
-                    throw new ParserException("Parse error");
-                }
-                
-            } else if (str.startsWith("[E]")) {
-                //starts with "event "
-                if (str.startsWith("[E][ ] ")) {
-                    str = str.substring(7);
-                } else {
-                    str = str.substring(10);
-                    isDone = true;
-                }
-                String[] nameArr = str.split(" \\(from: ");
-                if (nameArr.length == 2) {
-                    String[] timeArr = nameArr[1].split(" to: ");
-                    if (timeArr.length == 2) {
-                        timeArr[1] = timeArr[1].substring(0,
-                                timeArr[1].length() - 1);
-                        newTask = new Event(nameArr[0], timeArr[0], timeArr[1]);
-                    } else {
-                        throw new ParserException("Parse error");
-                    }
-                } else {
-                    throw new ParserException("Parse error");
-                }
+    private Task parseFileToDo(String str) throws ParserException {
+        try {
+            String trim = "";
+            boolean isDone = false;
+            if (str.startsWith("[T][ ] ")) {
+                trim = str.substring(7);
+                isDone = false;
             } else {
-                throw new ParserException("Not a type of task");
+                trim = str.substring(10);
+                isDone = true;
             }
+            Task t = new ToDo(trim);
+            t.setDone(isDone);
+            return t;
         } catch (EmptyStringException e) {
-            throw new ParserException("Parse error");
+            throw new ParserException(e.getMessage());
         }
-        if (newTask != null) {
-            newTask.setDone(isDone);
+    }
+
+    private static Task parseFileDeadline(String str) throws ParserException {
+        try {
+            String trim = "";
+            boolean isDone = false;
+            if (str.startsWith("[D][ ] ")) {
+                trim = str.substring(7);
+                isDone = false;
+            } else {
+                trim = str.substring(10);
+                isDone = true;
+            }
+            String[] sarr = trim.split(" \\(by: ");
+            if (sarr.length != 2) {
+                throw new ParserException(STORAGE_FAIL);
+            }
+            //delete newline character
+            sarr[1] = sarr[1].substring(0, sarr[1].length() - 1);
+            Task t = new Deadline(sarr[0], parseDate(sarr[1]));
+            t.setDone(isDone);
+            return t;
+        } catch (EmptyStringException e) {
+            throw new ParserException(e.getMessage());
         }
-        return newTask;
+    }
+
+    private static Task parseFileEvent(String str) throws ParserException {
+        try {
+            String trim = "";
+            boolean isDone = false;
+            if (str.startsWith("[E][ ] ")) {
+                trim = str.substring(7);
+                isDone = false;
+            } else {
+                trim = str.substring(10);
+                isDone = true;
+            }
+            String[] nameArr = trim.split(" \\(from: ");
+            if (nameArr.length != 2) {
+                throw new ParserException(STORAGE_FAIL);
+            }
+            String[] timeArr = nameArr[1].split(" to: ");
+            if (timeArr.length != 2) {
+                throw new ParserException(STORAGE_FAIL);
+            }
+            timeArr[1] = timeArr[1].substring(0,
+                    timeArr[1].length() - 1);
+            Task t = new Event(nameArr[0], timeArr[0], timeArr[1]);
+            t.setDone(isDone);
+            return t;
+        } catch (EmptyStringException e) {
+            throw new ParserException(e.getMessage());
+        }
     }
 
     /**
      * Returns date string, possibly in yyyy-mm-dd format.
-     * Only parses dates like 03 Mar
+     * Only parses dates like 03 Mar.
      * 
      * @param str Date string.
      * @return Date string.
@@ -187,54 +267,40 @@ public class Parser {
             return str.substring(7, 11) + "-"
                     + getMonthNumber(str.substring(3,6))
                     + "-" + str.substring(0,2);
+
         } else if (str.matches("^\\d{1} \\w{3} \\d{4}$")) {
             return str.substring(6, 10) + "-"
                     + getMonthNumber(str.substring(2,5))
                     + "-0" + str.substring(0,1);
+
         } else if (str.matches("^\\d{2}/\\w{3}/\\d{4}$")) {
             return str.substring(7, 11) + "-"
                     + getMonthNumber(str.substring(3,6))
                     + "-" + str.substring(0,2);
+
         } else if (str.matches("^\\d{1}/\\w{3}/\\d{4}$")) {
             return str.substring(6, 10) + "-"
                     + getMonthNumber(str.substring(2,5))
                     + "-0" + str.substring(0,1);
+
         } else if (str.matches("^\\d{2} \\w{3}$")) {
             return LocalDate.now().getYear() + "-"
                     + getMonthNumber(str.substring(3,6))
                     + "-" + str.substring(0,2);
+                    
         } else {
             return str;
         }
     }
 
-    private String getMonthNumber(String s) {
-        if (s.equalsIgnoreCase("jan")) {
-            return "01";
-        } else if (s.equalsIgnoreCase("feb")) {
-            return "02";
-        }  else if (s.equalsIgnoreCase("mar")) {
-            return "03";
-        }  else if (s.equalsIgnoreCase("apr")) {
-            return "04";
-        }  else if (s.equalsIgnoreCase("may")) {
-            return "05";
-        }  else if (s.equalsIgnoreCase("jun")) {
-            return "06";
-        }  else if (s.equalsIgnoreCase("jul")) {
-            return "07";
-        }  else if (s.equalsIgnoreCase("aug")) {
-            return "08";
-        }  else if (s.equalsIgnoreCase("sep")) {
-            return "09";
-        }  else if (s.equalsIgnoreCase("oct")) {
-            return "10";
-        }  else if (s.equalsIgnoreCase("nov")) {
-            return "11";
-        }  else if (s.equalsIgnoreCase("dec")) {
-            return "12";
-        } else {
-            return s;
+    private static String getMonthNumber(String month) {
+        String[] months = {"jan", "feb", "mar", "apr", "may", "jun",
+                            "jul", "aug", "sep", "oct", "nov", "dec"};
+        for (int i = 0; i < 12; i++) {
+            if (months[i].equalsIgnoreCase(month)) {
+                return String.valueOf(i + 1);
+            }
         }
+        return month;
     }
 }

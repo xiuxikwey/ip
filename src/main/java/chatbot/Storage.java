@@ -40,7 +40,7 @@ public class Storage {
         BufferedReader reader = new BufferedReader(new FileReader(PATH));
         while (reader.ready()) {
             String str = reader.readLine();
-            result.add(parser.fileInputToTask(str));
+            result.add(parser.parseFileInput(str));
         }
         reader.close();
         return result;

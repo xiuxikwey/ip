@@ -13,20 +13,20 @@ import tasks.ToDo;
 /**
  * Tests for Parser.
  * 
- * Note Parser.fileToTask depends on toString() of tasks.
+ * Note Parser.parseFileInput() depends on toString() of tasks.
  */
 public class ParserTest {
-    
+
     @Test
-    public void fileToTaskRead() {
+    public void parseFileInput_normalInput() {
         try {
             Parser parser = new Parser();
             Task a = new ToDo("s");
             Task b = new Deadline("a","b");
             Task c = new Event("a","b","c");
-            assertEquals(parser.fileInputToTask(a.toString()), a);
-            assertEquals(parser.fileInputToTask(b.toString()), b);
-            assertEquals(parser.fileInputToTask(c.toString()), c);
+            assertEquals(parser.parseFileInput(a.toString()), a);
+            assertEquals(parser.parseFileInput(b.toString()), b);
+            assertEquals(parser.parseFileInput(c.toString()), c);
         } catch (EmptyStringException e) {
             throw new RuntimeException("Empty task name");
         } catch (ParserException e) {
@@ -35,7 +35,7 @@ public class ParserTest {
     }
 
     @Test
-    public void userToTaskRead() {
+    public void parseFileInput_malformedInput() {
         try {
             Parser parser = new Parser();
             Task a = new ToDo("a");
