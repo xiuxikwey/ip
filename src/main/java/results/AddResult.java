@@ -5,12 +5,16 @@ import chatbot.Ui;
 import tasks.Task;
 
 public class AddResult extends Result {
-    private Task task;
+
     private TaskList taskList;
     private Ui ui;
 
-    public AddResult(Task task, TaskList taskList, Ui ui) {
+    int index;
+    private Task task;
+    
+    public AddResult(int index, Task task, TaskList taskList, Ui ui) {
         this.task = task;
+        this.index = index;
         this.taskList = taskList;
         this.ui = ui;
     }
@@ -19,8 +23,8 @@ public class AddResult extends Result {
      * Reverses this result and returns own reverse.
      */
     public Result reverse() {
-        taskList.deleteTask(task);
+        taskList.deleteAtIndex(index);
         ui.speak("Deleted " + task);
-        return new DeleteResult(task, taskList, ui);
+        return new DeleteResult(index, task, taskList, ui);
     }
 }

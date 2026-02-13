@@ -9,7 +9,7 @@ import tasks.Task;
  */
 public class TaskList {
     private ArrayList<Task> tasks = new ArrayList<>();
-
+    
     /**
      * Initialises taskList from list.
      */
@@ -23,11 +23,11 @@ public class TaskList {
 
     /**
      * Set task.isDone at an index.
-     * Returns original isDone so undo is possible.
+     * Returns original state so undo is possible.
      * 
      * @param index Index as a string.
      * @param isDone Desired isDone.
-     * @return Original isDone of task.
+     * @return Original isDone.
      * @throws NumberFormatException
      * @throws IndexOutOfBoundsException
      */
@@ -44,23 +44,34 @@ public class TaskList {
      * Add new task to list.
      * 
      * @param Task
+     * @return Index of task.
      */
-    public void storeTask(Task newTask) {
+    public int storeTask(Task newTask) {
         assert(newTask != null);
         tasks.add(newTask);
+        return tasks.size() - 1;
     }
 
     /**
-     * Deletes task from list.
+     * Insert task at index.
      * 
-     * @param target
+     * @param Task
      */
-    public void deleteTask(Task target) {
-        for (int i = tasks.size() - 1; i >= 0; i--) {
-            if (tasks.get(i).equals(target)) {
-                tasks.remove(i);
-            }
-        }
+    public void storeTaskAtIndex(Task newTask, int index) {
+        assert(newTask != null);
+        tasks.add(index, newTask);
+    }
+
+    /**
+     * Removes task at index.
+     * 
+     * @param index
+     * @return Deleted task.
+     */
+    public Task deleteAtIndex(int index) {
+        Task target = tasks.get(index);
+        tasks.remove(index);
+        return target;
     }
 
     /**
@@ -71,7 +82,7 @@ public class TaskList {
      * @throws NumberFormatException
      * @throws IndexOutOfBoundsException
      */
-    public Task deleteIndex(String trim) throws
+    public Task deleteAtIndex(String trim) throws
             NumberFormatException, IndexOutOfBoundsException {
         Integer i = Integer.parseInt(trim);
         Task deleted = this.tasks.get(i);

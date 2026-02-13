@@ -23,6 +23,7 @@ public class AddCommand extends Command {
     private TaskList taskList;
     private Ui ui;
     
+    private int index;
     private String input;
     private Task task;
     
@@ -51,13 +52,13 @@ public class AddCommand extends Command {
     public Result run() {
         try {
             task = parser.userInputToTask(input);
-            taskList.storeTask(task);
+            index = taskList.storeTask(task);
             ui.speak("Next task is to \"" + task + "\"!");
             storage.updateStorage(taskList.getList());
-            return new AddResult(task, taskList, ui);
+            return new AddResult(index, task, taskList, ui);
         } catch (IOException e) {
             ui.speak("Save to file failed.");
-            return new AddResult(task, taskList, ui);
+            return new AddResult(index, task, taskList, ui);
         } catch (ParserException e) {
             ui.speak(e.getMessage());
             return new NoResult();

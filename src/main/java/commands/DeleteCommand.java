@@ -48,13 +48,13 @@ public class DeleteCommand extends Command {
      */
     public Result run() {
         try {
-            task = tasklist.deleteIndex(input);
+            task = tasklist.deleteAtIndex(input);
             ui.speak("Deleted " + task);
             storage.updateStorage(tasklist.getList());
-            return new DeleteResult(task, tasklist, ui);
+            return new DeleteResult(Integer.valueOf(input), task, tasklist, ui);
         } catch (IOException e) {
             ui.speak("Save to file failed.");
-            return new DeleteResult(task, tasklist, ui);
+            return new DeleteResult(Integer.valueOf(input), task, tasklist, ui);
         } catch (NumberFormatException | IndexOutOfBoundsException e) {
             ui.speak("We do not have this task number.");
             return new NoResult();

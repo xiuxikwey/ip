@@ -22,7 +22,8 @@ public class UpdateCommand extends Command {
     
     private String index;
     private boolean nextIsDone;
-    
+    private boolean previousIsDone;
+
     /**
      * Initialises parameters.
      * 
@@ -48,7 +49,7 @@ public class UpdateCommand extends Command {
      */
     public Result run() {
         try {
-            boolean previousIsDone = taskList.markAtIndex(index, this.nextIsDone);
+            previousIsDone = taskList.markAtIndex(index, this.nextIsDone);
             if (this.nextIsDone) {
                 ui.speak("Consider it DONE!");
             } else {

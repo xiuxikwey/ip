@@ -88,8 +88,8 @@ public class TaskListTest {
         } catch (EmptyStringException e) {
             throw new RuntimeException("Empty task name");
         }
-        list.deleteIndex("2");
-        list.deleteIndex("0");
+        list.deleteAtIndex("2");
+        list.deleteAtIndex("0");
         assertEquals(list.readTasks()
                 , """
                 ###################
@@ -108,7 +108,7 @@ public class TaskListTest {
             throw new RuntimeException();
         }
         list.storeTask(task);
-        list.deleteIndex("0");
+        list.deleteAtIndex("0");
         assertEquals(list.readTasks()
                 , """
                 ###################
