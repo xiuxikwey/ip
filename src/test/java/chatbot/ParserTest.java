@@ -20,12 +20,13 @@ public class ParserTest {
     @Test
     public void fileToTaskRead() {
         try {
+            Parser parser = new Parser();
             Task a = new ToDo("s");
             Task b = new Deadline("a","b");
             Task c = new Event("a","b","c");
-            assertEquals(Parser.fileInputToTask(a.toString()), a);
-            assertEquals(Parser.fileInputToTask(b.toString()), b);
-            assertEquals(Parser.fileInputToTask(c.toString()), c);
+            assertEquals(parser.fileInputToTask(a.toString()), a);
+            assertEquals(parser.fileInputToTask(b.toString()), b);
+            assertEquals(parser.fileInputToTask(c.toString()), c);
         } catch (EmptyStringException e) {
             throw new RuntimeException("Empty task name");
         } catch (ParserException e) {
@@ -36,12 +37,13 @@ public class ParserTest {
     @Test
     public void userToTaskRead() {
         try {
+            Parser parser = new Parser();
             Task a = new ToDo("a");
             Task b = new Deadline("b","b");
             Task c = new Event("c","c","c");
-            assertEquals(Parser.userInputToTask("todo a"), a);
-            assertEquals(Parser.userInputToTask("deadline b /by b"), b);
-            assertEquals(Parser.userInputToTask("event c /from c /to c"), c);
+            assertEquals(parser.userInputToTask("todo a"), a);
+            assertEquals(parser.userInputToTask("deadline b /by b"), b);
+            assertEquals(parser.userInputToTask("event c /from c /to c"), c);
         } catch (EmptyStringException e) {
             throw new RuntimeException("Empty task name");
         } catch (ParserException e) {
@@ -52,7 +54,8 @@ public class ParserTest {
     @Test
     public void userToTaskFail1() {
         try {
-            Parser.userInputToTask("deadline b /by b /by b");
+            Parser parser = new Parser();
+            parser.userInputToTask("deadline b /by b /by b");
         }catch (ParserException e) {
             assertEquals("Try deadline A /by B.", e.getMessage());
         }
@@ -61,7 +64,8 @@ public class ParserTest {
     @Test
     public void userToTaskFail2() {
         try {
-            Parser.userInputToTask("event c /to c /from c");
+            Parser parser = new Parser();
+            parser.userInputToTask("event c /to c /from c");
         }catch (ParserException e) {
             assertEquals("Try event A /from B /to C.", e.getMessage());
         }

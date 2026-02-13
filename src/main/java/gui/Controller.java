@@ -1,10 +1,8 @@
 package gui;
 
-import chatbot.Parser;
-import chatbot.TaskList;
-import chatbot.Ui;
+import chatbot.Oliver;
 
-import java.util.ArrayList;
+import java.util.stream.Stream;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -33,25 +31,27 @@ public class Controller extends SplitPane {
     @FXML
     private Button sendButton;
     @FXML
-    private ImageView head;
+    private ImageView headImage;
     private Image img = new Image(this.getClass().getResourceAsStream("/images/face.png"));
     
+    private Oliver oliver;
+    private String WELCOME = 
+            """
+            Oliver, King Of The Night, at your service!
+            I know "todo", "deadline", "event", "list", "mark",
+            "unmark", "delete", "search", "undo", "redo" and "bye"!
+            What shall we do next?""";
+
     @FXML
     public void initialize() {
-        TaskList.recover();
-        //autoscroll
-        scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
+        this.oliver = new Oliver();
         //event handlers
         userInput.addEventHandler(KeyEvent.KEY_RELEASED, new keyPress());
         sendButton.setOnAction(new buttonPress());
         //initialise contents
-        head.setImage(img);
+        headImage.setImage(img);
         dialogContainer.getChildren().add(
-                DialogBox.getOliverBox(
-                        """
-                        Oliver, King Of The Night, at your service!
-                        I know "todo", "deadline", "event", "list", "mark", "unmark", "delete", "search" and "bye"!
-                        What shall we do next?"""));
+                DialogBox.getOliverBox(WELCOME));
 
     }
 
@@ -77,29 +77,18 @@ public class Controller extends SplitPane {
      */
     private void handleUserInput() {
         String input = userInput.getText();
-        String[] parts = input.split("\n");
-        boolean shouldExit = false;
+        Stream.of(input.split("\n"))
+            .filter((str)-> !str.isBlank())
+            .forEach((str)->oliver.takeInput(str));
 
-        ArrayList<String> inputs = new ArrayList<>();
-        for (String s: parts) {
-            if (!s.isEmpty()) {
-                if (!Parser.parseUserInput(s)) {
-                    shouldExit = true;
-                }
-                inputs.add(s);
-            }
-        }
+        String printableInput = String.join("\n",
+                input.split("\n"));
+        String response = oliver.getResponse();
 
-        input = String.join("\n", inputs);
-        String response = String.join("\n", Ui.getResponses());        
         dialogContainer.getChildren().addAll(
-                DialogBox.getUserBox(input),
+                DialogBox.getUserBox(printableInput),
                 DialogBox.getOliverBox(response)
         );
         userInput.clear();
-
-        if (shouldExit) {
-            javafx.application.Platform.exit();
-        }
     }
 }

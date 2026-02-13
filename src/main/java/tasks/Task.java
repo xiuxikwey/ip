@@ -14,7 +14,7 @@ public class Task {
      * @throws EmptyStringException Thrown when name is empty string.
      */
     public Task(String name) throws EmptyStringException {
-        if (!name.matches("\\S.*+")) {
+        if (name.isBlank()) {
             throw new EmptyStringException("The task needs a name.");
         }
         this.name = name;
@@ -23,6 +23,10 @@ public class Task {
 
     public void setDone(boolean b) {
         this.isDone = b;
+    }
+
+    public boolean getDone() {
+        return this.isDone;
     }
 
     @Override

@@ -20,17 +20,13 @@ public class Storage {
     /**
      * Updates storage.
      */
-    public static void updateStorage(ArrayList<Task> tasks) {
-        try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter(PATH));
-            for (Task t : tasks) {
-                writer.write(t.toString(), 0, t.toString().length());
-                writer.newLine();
-            }
-            writer.close();
-        } catch (IOException e) {
-            Ui.speak("I forgot how to write :P");
+    public void updateStorage(ArrayList<Task> tasks) throws IOException {
+        BufferedWriter writer = new BufferedWriter(new FileWriter(PATH));
+        for (Task t : tasks) {
+            writer.write(t.toString(), 0, t.toString().length());
+            writer.newLine();
         }
+        writer.close();
     }
 
     /**
@@ -38,22 +34,15 @@ public class Storage {
      * 
      * @return ArrayList of stored tasks
      */
-    public static ArrayList<Task> getList() {
+    public ArrayList<Task> getList(Parser parser) throws
+            FileNotFoundException, IOException, ParserException {
         ArrayList<Task> result = new ArrayList<Task>();
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader(PATH));
-            while (reader.ready()) {
-                String str = reader.readLine();
-                result.add(Parser.fileInputToTask(str));
-            }
-            reader.close();
-        } catch (FileNotFoundException e) {
-            Ui.speak("Getting a new list...");
-        } catch (IOException e) {
-            Ui.speak("I forgot how to read :P");
-        } catch (ParserException e) {
-            Ui.speak("Lost my old list...");
+        BufferedReader reader = new BufferedReader(new FileReader(PATH));
+        while (reader.ready()) {
+            String str = reader.readLine();
+            result.add(parser.fileInputToTask(str));
         }
+        reader.close();
         return result;
     }
 }

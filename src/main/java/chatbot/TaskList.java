@@ -1,59 +1,43 @@
 package chatbot;
 
 import java.util.ArrayList;
-import java.util.ListIterator;
 
 import tasks.Task;
 
 /**
- * List of tasks with add, delete, list functionality.
+ * Manages operations on list of tasks.
  */
 public class TaskList {
-    private static ArrayList<Task> tasks = new ArrayList<>();
+    private ArrayList<Task> tasks = new ArrayList<>();
 
     /**
-     * Initialises taskList from Storage.
+     * Initialises taskList from list.
      */
-    public static void recover() {
-        tasks = Storage.getList();
+    public void getTasksFrom(ArrayList<Task> list) {
+        this.tasks = list;
+    }
+
+    public ArrayList<Task> getList() {
+        return this.tasks;
     }
 
     /**
-     * Removes task from list.
+     * Set task.isDone at an index.
+     * Returns original isDone so undo is possible.
      * 
-     * @param trim Task number as a string.
+     * @param index Index as a string.
+     * @param isDone Desired isDone.
+     * @return Original isDone of task.
+     * @throws NumberFormatException
+     * @throws IndexOutOfBoundsException
      */
-    public static void deleteIndex(String trim) {
-        try {
-            Integer i = Integer.parseInt(trim);
-            Ui.speak("Deleted: " + tasks.get(i));
-            tasks.remove((int) i);
-            Storage.updateStorage(tasks);
-        } catch (NumberFormatException | IndexOutOfBoundsException e) {
-            Ui.speak("We do not have this task number.");
-        }
-    }
-
-    /**
-     * Set task isDone for a task number.
-     * 
-     * @param trim Task number as string.
-     * @param status Desired isDone of task.
-     */
-    public static void markAtIndex(String trim, boolean status) {
-        try {
-            Integer i = Integer.parseInt(trim);
-            tasks.get(i).setDone(status);
-            if (status) {
-                Ui.speak("Consider it DONE!");
-            } else {
-                Ui.speak("The threads unravel.");
-            }
-            Storage.updateStorage(tasks);
-            readTasks();
-        } catch (NumberFormatException | IndexOutOfBoundsException e) {
-            Ui.speak("We do not have this task number.");
-        }
+    public boolean markAtIndex(String index, boolean isDone)
+            throws NumberFormatException, IndexOutOfBoundsException {
+        Integer i = Integer.parseInt(index);
+        Task t = tasks.get(i);
+        boolean previousIsDone = t.getDone();
+        t.setDone(isDone);
+        return previousIsDone;
     }
 
     /**
@@ -61,38 +45,69 @@ public class TaskList {
      * 
      * @param Task
      */
-    public static void storeTask(Task newTask) {
+    public void storeTask(Task newTask) {
         tasks.add(newTask);
-        Storage.updateStorage(tasks);
-        Ui.speak("Next task is to \"" + newTask + "\"!");
     }
 
     /**
-     * Print out all tasks.
+     * Deletes task from list.
+     * 
+     * @param target
      */
-    public static void readTasks() {
-        ListIterator<Task> iter = tasks.listIterator();
-        Ui.speak("""
-        ###################
-        ## SEIZE THE DAY""");
-        while (iter.hasNext()) {
-            Ui.speak("## " + iter.nextIndex() + ": " + iter.next());
+    public void deleteTask(Task target) {
+        for (int i = tasks.size() - 1; i >= 0; i--) {
+            if (tasks.get(i).equals(target)) {
+                tasks.remove(i);
+            }
         }
     }
 
     /**
-     * Prints tasks similar to search term.
+     * Removes task at index.
      * 
-     * @param str
+     * @param trim Index as string.
+     * @return Task that was deleted.
+     * @throws NumberFormatException
+     * @throws IndexOutOfBoundsException
      */
-    public static void searchTask(String str) {
-        Ui.speak("""
-        None shall escape""");
+    public Task deleteIndex(String trim) throws
+            NumberFormatException, IndexOutOfBoundsException {
+        Integer i = Integer.parseInt(trim);
+        Task deleted = this.tasks.get(i);
+        this.tasks.remove((int) i);
+        return deleted;
+    }
+
+    /**
+     * Returns list of tasks as a string.
+     * 
+     * @return String
+     */
+    public String readTasks() {
+        String result = """
+        ###################
+        ## SEIZE THE DAY""";
+        for (int i = 0; i < tasks.size(); i++) {
+            result = result.concat("\n" + "## " + String.valueOf(i)
+                    + ": " + tasks.get(i)); 
+        }
+        return result;
+    }
+
+    /**
+     * Returns tasks similar to search term.
+     * 
+     * @param str Names of tasks.
+     */
+    public String searchTask(String str) {
+        String result = """
+        None shall escape""";
         for (int i = 0; i < tasks.size(); i++) {
             Task t = tasks.get(i);
             if (t.toString().contains(str)) {
-                Ui.speak("## " + i + ": " + t.toString());
+                result = result.concat("\n## " + i + ": " + t.toString());
             }
         }
+        return result;
     }
 }

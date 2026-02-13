@@ -2,6 +2,16 @@ package chatbot;
 
 import java.time.LocalDate;
 
+import commands.AddCommand;
+import commands.Command;
+import commands.DeleteCommand;
+import commands.EchoCommand;
+import commands.ExitCommand;
+import commands.ListCommand;
+import commands.RedoCommand;
+import commands.SearchCommand;
+import commands.UndoCommand;
+import commands.UpdateCommand;
 import tasks.Deadline;
 import tasks.EmptyStringException;
 import tasks.Event;
@@ -9,59 +19,46 @@ import tasks.Task;
 import tasks.ToDo;
 
 /**
- * Converts strings to objects or functionality.
+ * Parses user input to Commands.
  */
 public class Parser {
 
-    /**
-     * Calls functions given user input.
-     * Returns false if program should terminate.
-     * 
-     * @param str User input.
-     * @return false if program should terminate.
-     */
-    public static boolean parseUserInput(String str) {
+    public Command parseUserInput(String str) {
         if (str.equalsIgnoreCase("bye")) {
-            Ui.sayGoodbye();
-            return false;
+            return new ExitCommand();
 
         } else if (str.equalsIgnoreCase("list")) {
-            TaskList.readTasks();
-            return true;
+            return new ListCommand();
 
         } else if (str.startsWith("mark ")) {
             str = str.substring(5);
-            TaskList.markAtIndex(str, true);
-            return true;
+            return new UpdateCommand(str, true);
 
         } else if (str.startsWith("unmark ")) {
             str = str.substring(7);
-            TaskList.markAtIndex(str, false);
-            return true;
+            return new UpdateCommand(str, false);
 
         } else if (str.startsWith("todo ") 
                 || str.startsWith("deadline ")
                 || str.startsWith("event ")) {
-            try {
-                TaskList.storeTask(userInputToTask(str));
-            } catch (ParserException e) {
-                Ui.speak(e.getMessage());
-            }
-            return true;
+            return new AddCommand(str);
 
         } else if (str.startsWith("delete ")) {
             str = str.substring(7);
-            TaskList.deleteIndex(str);
-            return true;
+            return new DeleteCommand(str);
 
         } else if (str.startsWith("search ")) {
             str = str.substring(7);
-            TaskList.searchTask(str);
-            return true;
+            return new SearchCommand(str);
+
+        } else if (str.equalsIgnoreCase("undo")) {
+            return new UndoCommand();
+
+        } else if (str.equalsIgnoreCase("redo")) {
+            return new RedoCommand();
 
         } else {
-            Ui.echo(str);
-            return true;
+            return new EchoCommand(str);
         }
     }
 
@@ -72,7 +69,7 @@ public class Parser {
      * @return Created task.
      * @throws ParserException If task is not created.
      */
-    public static Task userInputToTask(String str) throws ParserException {
+    public Task userInputToTask(String str) throws ParserException {
         Task newTask = null;
         try {
             if (str.startsWith("todo ")) {
@@ -117,7 +114,7 @@ public class Parser {
      * @return Task.
      * @throws ParserException If task is not created.
      */
-    public static Task fileInputToTask(String str) throws ParserException {
+    public Task fileInputToTask(String str) throws ParserException {
         Task newTask = null;
         boolean isDone = false;
         try {
@@ -185,7 +182,7 @@ public class Parser {
      * @param str Date string.
      * @return Date string.
      */
-    public static String parseDate(String str) {
+    private String parseDate(String str) {
         if (str.matches("^\\d{2} \\w{3} \\d{4}$")) {
             return str.substring(7, 11) + "-"
                     + getMonthNumber(str.substring(3,6))
@@ -211,7 +208,7 @@ public class Parser {
         }
     }
 
-    private static String getMonthNumber(String s) {
+    private String getMonthNumber(String s) {
         if (s.equalsIgnoreCase("jan")) {
             return "01";
         } else if (s.equalsIgnoreCase("feb")) {

@@ -25,13 +25,14 @@
                     dividerPositions="0.2, 0.9"
                     prefWidth="${root.width}"
                     prefheight="${root.height}">
-            <ImageView fx:id="head" 
+            <ImageView fx:id="headImage" 
                         preserveRatio="false"
                         fitWidth="${root.width}"
                         fitHeight="100"/>
             <ScrollPane fx:id="scrollPane"
                         hbarPolicy="NEVER"
-                        pannable="TRUE">
+                        pannable="TRUE"
+                        vvalue="${dialogContainer.height}">
                 <content>
                     <TextFlow fx:id="dialogContainer">
                     </TextFlow>

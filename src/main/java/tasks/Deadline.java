@@ -20,7 +20,7 @@ public class Deadline extends Task{
      */
     public Deadline(String name, String date) throws EmptyStringException {
         super(name);
-        if (!date.matches("\\S.*+")) {
+        if (date.isBlank()) {
             throw new EmptyStringException("The task needs a deadline.");
         }
         this.date = date;

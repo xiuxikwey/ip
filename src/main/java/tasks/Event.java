@@ -23,10 +23,10 @@ public class Event extends Task {
      */
     public Event(String name, String start, String end) throws EmptyStringException {
         super(name);
-        if (!start.matches("\\S.*+")) {
+        if (start.isBlank()) {
             throw new EmptyStringException("The task needs a start time.");
         }
-        if (!end.matches("\\S.*+")) {
+        if (end.isBlank()) {
             throw new EmptyStringException("The task needs an end time.");
         }
         this.start = start;

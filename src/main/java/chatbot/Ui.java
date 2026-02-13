@@ -3,31 +3,37 @@ package chatbot;
 import java.util.ArrayList;
 
 /**
- * Used by other classes to communicate with user.
+ * Stores and returns messages from other classes.
  */
 public class Ui {
    
-    private static ArrayList<String> responses = new ArrayList<>();
+    private ArrayList<String> responses;
 
     /**
-     * Returns last response from Ui and clears storage.
-     * 
-     * @return Last response.
+     * Initialises list of responses.
      */
-    public static ArrayList<String> getResponses() {
-        ArrayList<String> temp = Ui.responses;
-        Ui.responses = new ArrayList<>();
-        return temp;
+    public Ui() {
+        this.responses = new ArrayList<>();
     }
 
     /**
-     * Prints input in red colour.
-     * Updates guiResponse.
+     * Returns all responses as one string.
      * 
-     * @param input String to be printed.
+     * @return Response.
      */
-    public static void speak(String input) {
-       Ui.responses.add(input);
+    public String getResponse() {
+        String result = String.join("\n", responses);
+        responses.clear();
+        return result;
+    }
+
+    /**
+     * Adds message to list of responses.
+     * 
+     * @param input String to be added.
+     */
+    public void speak(String input) {
+       responses.add(input);
     }
     
     /**
@@ -35,19 +41,11 @@ public class Ui {
      * 
      * @param str String to be printed.
      */
-    public static void echo(String str) {
-        //unrecognised, capitalise and echo
+    public void echo(String str) {
         if (str.length() > 0) {
             str = str.substring(0, 1).toUpperCase()
                     + str.substring(1);
         }
         speak(str + " to you too!");
-    }
-    
-    /**
-     * Prints goodbye message.
-     */
-    public static void sayGoodbye() {
-        speak("Goodbye!");
     }
 }
