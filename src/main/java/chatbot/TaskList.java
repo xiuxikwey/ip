@@ -16,6 +16,7 @@ public class TaskList {
      */
     public static void recover() {
         tasks = Storage.getList();
+        assert(tasks != null);
     }
 
     /**
@@ -62,6 +63,7 @@ public class TaskList {
      * @param Task
      */
     public static void storeTask(Task newTask) {
+        assert(newTask != null);
         tasks.add(newTask);
         Storage.updateStorage(tasks);
         Ui.speak("Next task is to \"" + newTask + "\"!");
