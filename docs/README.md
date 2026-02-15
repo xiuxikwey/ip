@@ -2,8 +2,15 @@
 ![Screenshot of product user interface](/Ui.png)
 
 Oliver keeps a list of tasks that you need to do,
-and will keep the list safe when you close him.
+and will keep the list safe when you close the program.
 You can mark tasks as done and delete them once you are finished.
+
+## Tabs
+
+Use the different tabs to learn how to use Oliver on the go.
+- Console: Prints success and error messages
+- Command List: Holds the full list of commands
+- Task List: Holds your current task list
 
 ## Adding tasks
 
@@ -13,11 +20,11 @@ Oliver keeps track of three different types of tasks:
 - Event, tasks with a start and end time
 
 Commands to add tasks can be found in the 'Command list' tab.
-An example is
+For example,
 
 `todo Wash the dog`
 
-that creates a new todo task with \<task name\>.
+creates a new todo task with \<task name\>.
 
 ```
 Next task is to "[T][ ] Wash the dog"!
@@ -29,10 +36,22 @@ Click on the 'Task List' tab to see all your tasks.
 Alternatively, type `list` and the task list will be
 printed in the 'Console' tab.
 
-## Command list tab
+## Deleting tasks
 
-The remaining commands can be found in the 'Command list' tab. Click on the tab
-and imitate the command format.
+Each task has a task number. Type `delete 0` to delete task number 0.
+
+## Marking tasks
+
+You can also mark tasks as done or undone using their task number.
+Type `mark 0` or `unmark 0`.
+
+## Finding tasks
+
+You can find tasks and their numbers with `search`.
+
+## Closing the program
+
+Type `bye` to close the program. Your task list will be saved.
 
 ## Syntax checker
 
