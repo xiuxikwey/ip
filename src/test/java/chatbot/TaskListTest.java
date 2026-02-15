@@ -19,7 +19,7 @@ import tasks.ToDo;
 public class TaskListTest {
 
     @Test
-    public void getTasksTest() {
+    public void getTasksFrom_test() {
         try {
             TaskList t = new TaskList();
             ArrayList<Task> arr = new ArrayList<>();
@@ -34,7 +34,7 @@ public class TaskListTest {
     }
 
     @Test
-    public void sizeTest() {
+    public void getTasksFrom_sizeTest() {
         TaskList list = new TaskList();
         ArrayList<Task> arr = new ArrayList<Task>();
         for (int i = 0; i < 100; i++) {
