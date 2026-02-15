@@ -57,7 +57,7 @@ public class AddCommand extends Command {
             storage.updateStorage(taskList.getList());
             return new AddResult(index, task, taskList, ui);
         } catch (IOException e) {
-            ui.speak("Save to file failed.");
+            ui.speak("Backup failed. Be careful!");
             return new AddResult(index, task, taskList, ui);
         } catch (ParserException e) {
             ui.speak(e.getMessage());

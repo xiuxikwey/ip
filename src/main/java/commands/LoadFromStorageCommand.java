@@ -43,7 +43,7 @@ public class LoadFromStorageCommand extends Command {
             ui.speak("Starting a new list...");
             return new NoResult();
         } catch (IOException e) {
-            ui.speak("Save to file failed.");
+            ui.speak("Backup failed. Good luck!");
             return new NoResult();
         } catch (ParserException e) {
             ui.speak(e.getMessage());

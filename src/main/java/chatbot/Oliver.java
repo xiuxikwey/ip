@@ -43,7 +43,31 @@ public class Oliver {
         history.add(result);
     }
 
+    /**
+     * Returns new responses by Oliver since this function was called.
+     * 
+     * @result Responses split by "\n".
+     */
     public String getResponse() {
         return ui.getResponse();
     };
+
+    /**
+     * Returns task list in String form.
+     * 
+     * @result Task list.
+     */
+    public String getTaskList() {
+        return ui.getTaskList(taskList);
+    }
+
+    /**
+     * Checks if input does not call echo.
+     * 
+     * @param input
+     * @return
+     */
+    public boolean CheckInput(String input) {
+        return parser.checkUserInput(input);
+    }
 }

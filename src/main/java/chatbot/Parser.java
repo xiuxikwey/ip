@@ -71,6 +71,30 @@ public class Parser {
         }
     }
 
+    /**
+     * Checks if user input is well-formed.
+     * 
+     * @param str
+     * @return
+     */
+    public boolean checkUserInput(String str) {
+        if (parseUserInput(str) instanceof EchoCommand) {
+            return false;
+        } else if (str.startsWith("todo ") 
+                || str.startsWith("deadline ")
+                || str.startsWith("event ")) {
+            try {
+                userInputToTask(str);
+                return true;
+            } catch (ParserException e) {
+                return false;
+            }
+        } else {
+            return true;
+        }
+    }
+
+
     private static String removeFirstWord(String str) {
         String trimmed = "";
         for (int i = 0; i < str.length(); i++) {

@@ -53,7 +53,7 @@ public class DeleteCommand extends Command {
             storage.updateStorage(tasklist.getList());
             return new DeleteResult(Integer.valueOf(input), task, tasklist, ui);
         } catch (IOException e) {
-            ui.speak("Save to file failed.");
+            ui.speak("Backup failed. Be careful!");
             return new DeleteResult(Integer.valueOf(input), task, tasklist, ui);
         } catch (NumberFormatException | IndexOutOfBoundsException e) {
             ui.speak("We do not have this task number.");

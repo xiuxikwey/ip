@@ -28,6 +28,13 @@ public class Ui {
     }
 
     /**
+     * Returns task list in String format.
+     */
+    public String getTaskList(TaskList t) {
+        return t.readTasks();
+    }
+
+    /**
      * Adds message to list of responses.
      * 
      * @param input String to be added.

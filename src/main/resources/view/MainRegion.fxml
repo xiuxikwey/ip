@@ -4,10 +4,10 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.TextFlow?>
 
@@ -18,26 +18,54 @@
             prefHeight="400.0"
             prefWidth="600.0">
     <top>
+        <ImageView  fx:id="headImage" 
+                    preserveRatio="false"
+                    fitWidth="${root.width}"
+                    fitHeight="100"/>
     </top>
     <center>
         <SplitPane  fx:id="splitPane"
                     orientation="VERTICAL"
-                    dividerPositions="0.2, 0.9"
+                    dividerPositions="0.9"
                     prefWidth="${root.width}"
                     prefheight="${root.height}">
-            <ImageView fx:id="headImage" 
-                        preserveRatio="false"
-                        fitWidth="${root.width}"
-                        fitHeight="100"/>
-            <ScrollPane fx:id="scrollPane"
-                        hbarPolicy="NEVER"
-                        pannable="TRUE"
-                        vvalue="${dialogContainer.height}">
-                <content>
-                    <TextFlow fx:id="dialogContainer">
-                    </TextFlow>
-                </content>
-            </ScrollPane>
+            <TabPane fx:id = "tabPane"
+                    tabClosingPolicy ="UNAVAILABLE">
+            <tabs>
+                <Tab text = "Console">
+                    <ScrollPane styleClass="scrollPane"
+                                hbarPolicy="NEVER"
+                                pannable="TRUE"
+                                vvalue="${dialogContainer.height}">
+                        <content>
+                            <TextFlow   fx:id="dialogContainer"
+                                        styleClass="dialog">
+                            </TextFlow>
+                        </content>
+                    </ScrollPane>
+                </Tab>
+                <Tab text = "Command List">
+                    <ScrollPane styleClass="scrollPane"
+                                hbarPolicy="NEVER">
+                        <content>
+                            <TextFlow   fx:id="commandContainer"
+                                        styleClass="dialog">
+                            </TextFlow>
+                        </content>
+                    </ScrollPane>
+                </Tab>
+                <Tab text = "Task List">
+                    <ScrollPane styleClass="scrollPane"
+                                hbarPolicy="NEVER">
+                        <content>
+                            <TextFlow   fx:id="taskContainer"
+                                        styleClass="dialog">
+                            </TextFlow>
+                        </content>
+                    </ScrollPane>
+                </Tab>
+            </tabs>
+            </TabPane>
             <HBox>
                 <children>
                     <TextArea fx:id="userInput"

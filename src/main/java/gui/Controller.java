@@ -8,9 +8,10 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextArea;
+import javafx.scene.effect.BlurType;
+import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -23,24 +24,43 @@ import javafx.scene.text.TextFlow;
  */
 public class Controller extends SplitPane {
     @FXML
-    private ScrollPane scrollPane;
-    @FXML
     private TextFlow dialogContainer;
+    @FXML
+    private TextFlow commandContainer;
+    @FXML
+    private TextFlow taskContainer;
     @FXML
     private TextArea userInput;
     @FXML
     private Button sendButton;
     @FXML
     private ImageView headImage;
+
     private Image img = new Image(this.getClass().getResourceAsStream("/images/Face.png"));
     
+    private InnerShadow invalidShadow = new InnerShadow(BlurType.valueOf("GAUSSIAN"),
+            javafx.scene.paint.Color.RED, 10, 0.5, 0, 0);
+    private InnerShadow validShadow = null;
+
     private Oliver oliver;
     private String WELCOME = 
             """
             Oliver, King Of The Night, at your service!
-            I know "todo", "deadline", "event", "list", "mark",
-            "unmark", "delete", "search", "undo", "redo" and "bye"!
+            Feel free to look at the command list!
             What shall we do next?""";
+    private String COMMANDS = 
+            """
+            todo <task name>
+            deadline <task name> /by <deadline>
+            event <task name> /from <start> /to <end> 
+            list
+            mark <task number>
+            unmark <task number>
+            delete <task number>
+            search <task name>
+            undo
+            redo
+            bye""";
 
     @FXML
     public void initialize() {
@@ -52,7 +72,11 @@ public class Controller extends SplitPane {
         headImage.setImage(img);
         dialogContainer.getChildren().add(
                 DialogBox.getOliverBox(WELCOME));
-
+        commandContainer.getChildren().add(
+            DialogBox.getOliverBox(COMMANDS));
+        taskContainer.getChildren().clear();
+        taskContainer.getChildren().add(
+            DialogBox.getOliverBox(oliver.getTaskList()));
     }
 
     private class buttonPress implements EventHandler<ActionEvent> {
@@ -67,6 +91,18 @@ public class Controller extends SplitPane {
         public void handle(KeyEvent event) {
             if (event.getCode() == KeyCode.ENTER) {
                 handleUserInput();
+            } else {
+                String input = userInput.getText();
+                boolean valid = Stream.of(input.split("\n"))
+                    .filter((str)-> !str.isBlank())
+                    .map((str)->oliver.CheckInput(str))
+                    .reduce(true, (a, b)-> a && b);
+                //AI assistance used to find method setEffect.
+                if (valid) {
+                    userInput.setEffect(validShadow);
+                } else {
+                    userInput.setEffect(invalidShadow);
+                }
             }
         }
     }
@@ -89,6 +125,9 @@ public class Controller extends SplitPane {
                 DialogBox.getUserBox(printableInput),
                 DialogBox.getOliverBox(response)
         );
+        taskContainer.getChildren().clear();
+        taskContainer.getChildren().add(
+            DialogBox.getOliverBox(oliver.getTaskList()));
         userInput.clear();
     }
 }

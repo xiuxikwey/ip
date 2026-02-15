@@ -32,7 +32,7 @@ public class RedoCommand extends Command {
             storage.updateStorage(taskList.getList());
             return new NoResult();
         } catch (IOException e) {
-            ui.speak("Save to file failed.");
+            ui.speak("Backup failed. Good luck!");
             return new NoResult();
         }
     }
