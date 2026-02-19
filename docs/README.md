@@ -7,7 +7,7 @@ You can mark tasks as done and delete them once you are finished.
 
 ## Tabs
 
-Use the different tabs to learn how to use Oliver on the go.
+Use the different tabs to learn how to use Oliver.
 - Console: Prints success and error messages
 - Command List: Holds the full list of commands
 - Task List: Holds your current task list
@@ -22,12 +22,12 @@ Oliver keeps track of three different types of tasks:
 Commands to add tasks can be found in the 'Command list' tab.
 For example,
 
-`todo Wash the dog`
+`todo Feed the dog`
 
 creates a new todo task with \<task name\>.
 
 ```
-Next task is to "[T][ ] Wash the dog"!
+Next task is to "[T][ ] Feed the dog"!
 ```
 
 ## Viewing tasks
@@ -61,8 +61,3 @@ Check the 'Command list' or submit it and check the feedback in the console.
 ## Undo and redo
 
 Oliver can undo up to 50 commands, and can undo the undoes with redo.
-
-## Batch input
-
-Multiple inputs can be run as long as they are on different lines.
-Be careful with this, because undo will only undo one command at a time.

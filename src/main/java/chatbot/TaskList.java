@@ -22,7 +22,7 @@ public class TaskList {
     }
 
     /**
-     * Set task.isDone at an index.
+     * Sets task.isDone at an index.
      * Returns original state so undo is possible.
      * 
      * @param index Index as a string.
@@ -41,7 +41,7 @@ public class TaskList {
     }
 
     /**
-     * Add new task to list.
+     * Adds new task to list.
      * 
      * @param Task
      * @return Index of task.
@@ -53,7 +53,7 @@ public class TaskList {
     }
 
     /**
-     * Insert task at index.
+     * Inserts task at index.
      * 
      * @param Task
      */

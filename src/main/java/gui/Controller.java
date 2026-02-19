@@ -74,7 +74,6 @@ public class Controller extends SplitPane {
                 DialogBox.getOliverBox(WELCOME));
         commandContainer.getChildren().add(
             DialogBox.getOliverBox(COMMANDS));
-        taskContainer.getChildren().clear();
         taskContainer.getChildren().add(
             DialogBox.getOliverBox(oliver.getTaskList()));
     }

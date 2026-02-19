@@ -72,9 +72,9 @@ public class Parser {
     }
 
     /**
-     * Checks if user input is well-formed.
+     * Checks if user input is a recognised command.
      * 
-     * @param str
+     * @param str User input.
      * @return
      */
     public boolean checkUserInput(String str) {
