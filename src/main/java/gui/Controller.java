@@ -16,6 +16,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.paint.Color;
 import javafx.scene.text.TextFlow;
 
 
@@ -39,7 +40,8 @@ public class Controller extends SplitPane {
     private Image img = new Image(this.getClass().getResourceAsStream("/images/Face.png"));
     
     private InnerShadow invalidShadow = new InnerShadow(BlurType.valueOf("GAUSSIAN"),
-            javafx.scene.paint.Color.RED, 10, 0.5, 0, 0);
+            new Color(1, 0, 0, 0.5),
+            10, 0.6, 0, 0);
     private InnerShadow validShadow = null;
 
     private Oliver oliver;
@@ -93,9 +95,9 @@ public class Controller extends SplitPane {
             } else {
                 String input = userInput.getText();
                 boolean valid = Stream.of(input.split("\n"))
-                    .filter((str)-> !str.isBlank())
-                    .map((str)->oliver.CheckInput(str))
-                    .reduce(true, (a, b)-> a && b);
+                        .filter((str)-> !str.isBlank())
+                        .map((str)->oliver.CheckInput(str))
+                        .reduce(true, (a, b)-> a && b);
                 //AI assistance used to find method setEffect.
                 if (valid) {
                     userInput.setEffect(validShadow);
@@ -113,20 +115,20 @@ public class Controller extends SplitPane {
     private void handleUserInput() {
         String input = userInput.getText();
         Stream.of(input.split("\n"))
-            .filter((str)-> !str.isBlank())
-            .forEach((str)->oliver.takeInput(str));
+                .filter((str) -> !str.isBlank())
+                .forEach((str) -> {
+                    oliver.takeInput(str);
+                    String response = oliver.getResponse();
+                    dialogContainer.getChildren().addAll(
+                            DialogBox.getUserBox(str),
+                            DialogBox.getOliverBox(response));
+                });
 
-        String printableInput = String.join("\n",
-                input.split("\n"));
-        String response = oliver.getResponse();
-
-        dialogContainer.getChildren().addAll(
-                DialogBox.getUserBox(printableInput),
-                DialogBox.getOliverBox(response)
-        );
         taskContainer.getChildren().clear();
         taskContainer.getChildren().add(
-            DialogBox.getOliverBox(oliver.getTaskList()));
+                DialogBox.getOliverBox(oliver.getTaskList()));
+
         userInput.clear();
+        userInput.setEffect(validShadow);
     }
 }

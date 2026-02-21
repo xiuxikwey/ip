@@ -11,7 +11,7 @@ public class DialogBox {
      * @return
      */
     public static Text getUserBox(String contents) {
-        Text result = new Text(contents + "\n");
+        Text result = new Text("> " + contents + "\n");
         result.getStyleClass().add("user");
         return result;
     }
