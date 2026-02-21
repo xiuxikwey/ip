@@ -6,7 +6,7 @@ package results;
 public class NoResult extends Result {
     
     /**
-     * Returns reverse
+     * Returns NoResult.
      */
     public Result reverse() {
         return this;

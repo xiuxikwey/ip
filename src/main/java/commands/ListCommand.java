@@ -8,13 +8,16 @@ import chatbot.Ui;
 import results.NoResult;
 import results.Result;
 
+/**
+ * Prints out list of tasks.
+ */
 public class ListCommand extends Command {
 
     private TaskList tasklist;
     private Ui ui;
     
     /**
-     * Saves classes for later use.
+     * Saves objects for later use.
      */
     public void bind(History h, Parser p, Storage s, TaskList t, Ui u) {
         this.tasklist = t;

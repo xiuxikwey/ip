@@ -21,7 +21,7 @@ public class History {
     }
 
     /**
-     * Updates undo list
+     * Adds new result to undo deque.
      * 
      * @param result
      */
@@ -37,7 +37,7 @@ public class History {
     }
 
     /**
-     * Executes undo
+     * Updates deques on undo.
      */
     public void undo() {
         if (undoList.isEmpty()) {
@@ -47,8 +47,8 @@ public class History {
         redoList.addLast(result.reverse());
     }
 
-        /**
-     * Executes undo
+    /**
+     * Updates deques on redo.
      */
     public void redo() {
         if (redoList.isEmpty()) {

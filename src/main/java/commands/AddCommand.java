@@ -37,7 +37,7 @@ public class AddCommand extends Command {
     }
 
     /**
-     * Saves classes for later use.
+     * Saves objects for later use.
      */
     public void bind(History h, Parser p, Storage s, TaskList t, Ui u) {
         this.parser = p;

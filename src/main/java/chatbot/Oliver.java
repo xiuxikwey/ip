@@ -16,7 +16,7 @@ public class Oliver {
     private Ui ui;
 
     /**
-     * Initialises classes in Oliver.
+     * Initialises objects in Oliver.
      */
     public Oliver() {
         this.history = new History();

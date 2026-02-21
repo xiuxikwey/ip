@@ -8,6 +8,10 @@ import chatbot.Ui;
 import results.NoResult;
 import results.Result;
 
+/**
+ * Echoes last user input.
+ * Used for unrecognised input.
+ */
 public class EchoCommand extends Command {
 
     private Ui ui;
@@ -21,8 +25,9 @@ public class EchoCommand extends Command {
     public EchoCommand(String input) {
         this.input = input;
     }
+    
     /**
-     * Saves classes for later use.
+     * Saves objects for later use.
      */
     public void bind(History h, Parser p, Storage s, TaskList t, Ui u) {
         this.ui = u;

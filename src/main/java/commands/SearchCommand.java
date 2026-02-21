@@ -8,6 +8,9 @@ import chatbot.Ui;
 import results.NoResult;
 import results.Result;
 
+/**
+ * Search for tasks given string.
+ */
 public class SearchCommand extends Command {
 
     private TaskList tasklist;
@@ -15,11 +18,17 @@ public class SearchCommand extends Command {
     
     private String target;
 
+    /**
+     * Creates new command.
+     * 
+     * @param target String to search.
+     */
     public SearchCommand(String target) {
         this.target = target;
     }
+
     /**
-     * Saves classes for later use.
+     * Saves objects for later use.
      */
     public void bind(History h, Parser p, Storage s, TaskList t, Ui u) {
         this.tasklist = t;

@@ -13,7 +13,7 @@ import results.Result;
 import tasks.Task;
 
 /**
- * Updates isDone of the task at index.
+ * Deletes tasks at an index.
  */
 public class DeleteCommand extends Command {
 
@@ -35,7 +35,7 @@ public class DeleteCommand extends Command {
     }
 
     /**
-     * Saves classes for later use.
+     * Saves objects for later use.
      */
     public void bind(History h, Parser p, Storage s, TaskList t, Ui u) {
         this.storage = s;
@@ -44,7 +44,7 @@ public class DeleteCommand extends Command {
     }
 
     /**
-     * Deleted task at input index.
+     * Deletes task at input index.
      */
     public Result run() {
         try {

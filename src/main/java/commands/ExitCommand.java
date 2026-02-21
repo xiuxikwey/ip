@@ -11,6 +11,9 @@ import javafx.application.Platform;
 import results.NoResult;
 import results.Result;
 
+/**
+ * Closes the program.
+ */
 public class ExitCommand extends Command {
 
     /**

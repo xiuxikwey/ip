@@ -36,7 +36,7 @@ public class UpdateCommand extends Command {
     }
 
     /**
-     * Saves classes for later use.
+     * Saves objects for later use.
      */
     public void bind(History h, Parser p, Storage s, TaskList t, Ui u) {
         this.storage = s;

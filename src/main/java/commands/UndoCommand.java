@@ -10,12 +10,18 @@ import chatbot.Ui;
 import results.NoResult;
 import results.Result;
 
+/**
+ * Undos previous result.
+ */
 public class UndoCommand extends Command {
     private History history;
     private Storage storage;
     private TaskList taskList;
     private Ui ui;
     
+    /**
+     * Saves objects for later use.
+     */
     public void bind(History h, Parser p, Storage s, TaskList t, Ui u) {
         this.history = h;
         this.storage = s;
@@ -24,7 +30,7 @@ public class UndoCommand extends Command {
     }
 
     /**
-     * Closes program immediately.
+     * Undos previous result
      */
     public Result run() {
         try {

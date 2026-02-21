@@ -8,7 +8,7 @@ import chatbot.Ui;
 import results.Result;
 
 /**
- * Command performs functions and returns Result when run.
+ * Performs functions and returns Result when run.
  */
 public abstract class Command {
     public abstract Result run();

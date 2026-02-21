@@ -10,12 +10,18 @@ import chatbot.Ui;
 import results.NoResult;
 import results.Result;
 
+/**
+ * Redos previous undo
+ */
 public class RedoCommand extends Command {
     private History history;
     private Storage storage;
     private TaskList taskList;
     private Ui ui;
     
+    /**
+     * Saves objects for later use.
+     */
     public void bind(History h, Parser p, Storage s, TaskList t, Ui u) {
         this.history = h;
         this.storage = s;
@@ -24,7 +30,7 @@ public class RedoCommand extends Command {
     }
 
     /**
-     * Closes program immediately.
+     * Redos previous undo.
      */
     public Result run() {
         try {

@@ -18,7 +18,7 @@ public class UpdateResult extends Result {
     }
 
     /**
-     * Reverses this result and returns own reverse.
+     * Reverses this result and returns that result.
      */
     public Result reverse() {
         return command.run();

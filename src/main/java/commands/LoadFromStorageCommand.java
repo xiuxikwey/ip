@@ -13,7 +13,7 @@ import results.NoResult;
 import results.Result;
 
 /**
- * Updates isDone of the task at index.
+ * Loads taskList from list in storage.
  */
 public class LoadFromStorageCommand extends Command {
 
@@ -23,7 +23,7 @@ public class LoadFromStorageCommand extends Command {
     private Ui ui;
 
     /**
-     * Saves classes for later use.
+     * Saves objects for later use.
      */
     public void bind(History h, Parser p, Storage s, TaskList t, Ui u) {
         this.parser = p;
@@ -33,7 +33,7 @@ public class LoadFromStorageCommand extends Command {
     }
 
     /**
-     * Loads tasks from storage
+     * Loads tasks from storage.
      */
     public Result run() {
         try {
